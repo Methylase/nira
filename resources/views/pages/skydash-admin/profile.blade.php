@@ -187,7 +187,7 @@
                                 <label class="col-sm-3 col-form-label">Marital Status</label>
                                 @if(!isset($profile->marital_status))
                                 <div class="col-sm-4">
-                                    <div class="form-check">
+                                    <div class="form-check form-check-success">
                                     <label class="form-check-label">
                                         <input type="radio" name="maritalStatus" class="form-check-input" id="membershipRadios1" value="single">
                                         Single
@@ -195,7 +195,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
-                                    <div class="form-check">
+                                    <div class="form-check form-check-success">
                                     <label class="form-check-label">
                                         <input type="radio" name="maritalStatus" class="form-check-input"  id="membershipRadios2" value="married">
                                         Married
@@ -211,7 +211,7 @@
                                 </div>
                                 @elseif($profile->marital_status ==="single")
                                 <div class="col-sm-4">
-                                    <div class="form-check">
+                                    <div class="form-check form-check-success">
                                     <label class="form-check-label">
                                         <input type="radio" name="maritalStatus" class="form-check-input" id="membershipRadios1" value="{{old('maritalStatus',$profile->marital_status)}}" checked>
                                         Single
@@ -219,7 +219,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
-                                    <div class="form-check">
+                                    <div class="form-check form-check-success">
                                     <label class="form-check-label">
                                         <input type="radio" name="maritalStatus" class="form-check-input"  id="membershipRadios2" value="married">
                                         Married
@@ -235,7 +235,7 @@
                                 </div>
                                 @elseif($profile->marital_status ==="married")
                                 <div class="col-sm-4">
-                                    <div class="form-check">
+                                    <div class="form-check form-check-success">
                                     <label class="form-check-label">
                                         <input type="radio" name="maritalStatus" class="form-check-input" id="membershipRadios1" value="{{old('maritalStatus',$profile->marital_status)}}" checked>
                                         Married
@@ -243,7 +243,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
-                                    <div class="form-check">
+                                    <div class="form-check form-check-success">
                                     <label class="form-check-label">
                                         <input type="radio" name="maritalStatus" class="form-check-input"  id="membershipRadios2" value="single">
                                         Single
@@ -412,8 +412,8 @@
                     </div>
                     <div class="row">
                       <div class="col-md-6 offset-sm-6 col-sm-6">
-                        <div class="form-group">
-                           <button type="submit"  id="update"  class="btn btn-success form-control" ><i class="fa fa-save"></i> Update </button>
+                        <div class="form-group d-flex justify-content-end">
+                           <button type="submit"  id="update"  class="btn btn-success" ><i class="fa fa-save"></i> Update </button>
                         </div>
                       </div>
                     </div>
