@@ -40,6 +40,9 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
+                            <p>
+                            <img src="{{isset($profile->profile_image) && $profile->profile_image !=='' ? url('uploads/'.$profile->profile_image) : asset('images/user.jpg') }}" alt="profile image"/>
+                            </p>
                             <div class="form-group">
                             <label for="profile-image" class="control-label"> Select Image</label>
                                 <input type="file" id="profileImage" name="profileImage" class="form-control">
