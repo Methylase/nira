@@ -2159,5 +2159,48 @@ footer .credits {
   font-size: 14px;
 }
 
+/* custom style*/
+.grid-option > form{
+  display:flex;
+  justify-content: right;
+}
+.img-box-a > .img-a{
+  height:560px;
+}
+nav > .pagination {
+  display: flex;
+  justify-content : right;
+}
+
+.page-link{
+  color: black;
+  margin:8px;
+  border: none;
+  border-radius: 0;
+}
+
+.page-link:hover{
+  margin:8px;
+  color: black;
+  background-color: #2eca6a;
+  border: none;
+  border-radius: 0;
+}
+
+
+.active > .page-link, .page-link.active {
+  background-color: #2eca6a;
+  border: 1px solid #2eca6a;
+  color: black
+}
+
+.swiper-silde > .img-swipe{
+  height: 560px !important;
+}
+
+.carousel-img{
+  height: 400px;
+  min-width: 700px;
+}
 
 

@@ -31,11 +31,15 @@ class CreateProfilesTable extends Migration
             $table->string('localG');
             $table->string('country');
             $table->string('postalCode');
-            $table->integer('user_id')->unsigned()->nullable();
-        });
-         Schema::table('profiles', function (Blueprint $table) {
-              $table->foreign('user_id')->references('id')->on('users');
-         });
+            $table->string('description');
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });       
+      
     }
 
     /**
@@ -45,6 +49,6 @@ class CreateProfilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('register_parent_informations');
+        Schema::dropIfExists('profiles');
     }
 }

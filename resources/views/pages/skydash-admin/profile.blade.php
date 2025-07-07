@@ -27,9 +27,9 @@
                     @endif
                 <h4 class="card-title">Update Profile</h4>
                 @if(!isset($profile->id))
-                    <form class="form-sample" action="{{route('setup-profile')}}" enctype="multipart/form-data" method="POST">
+                    <form class="form-sample" action="/setup-profile" enctype="multipart/form-data" method="POST">
                 @else
-                    <form class="form" action="{{route('setup-profile')}}" enctype="multipart/form-data" method="POST">
+                    <form class="form" action="/setup-profile" enctype="multipart/form-data" method="POST">
                     <input type="hidden" name="id" value="{{old('id', $profile->id)}}">
                 @endif
 
@@ -40,12 +40,12 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
-                            <p>
-                            <img src="{{isset($profile->profile_image) && $profile->profile_image !=='' ? url('uploads/'.$profile->profile_image) : asset('images/user.jpg') }}" alt="profile image"/>
-                            </p>
+                            
+                            <img src="{{isset($profile->profile_image) && $profile->profile_image !=='' ? url('uploads/'.$profile->id.'/'.$profile->profile_image) : asset('images/user.jpg') }}" class="profile-img"  alt="profile image"/>
+                        
                             <div class="form-group">
-                            <label for="profile-image" class="control-label"> Select Image</label>
-                                <input type="file" id="profileImage" name="profileImage" class="form-control">
+                            <label for="profile-image" class="control-label"> Upload image</label>
+                                <input type="file" id="propertyImage" name="profileImage" class="form-control">
                                 <span class="text-danger">
                                     @if($errors->has('profileImage'))
                                         {{ $profileImage= $errors->first('profileImage')}}
@@ -63,7 +63,7 @@
                                 <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">First Name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="firstname" value="{{$profile->firstname !== null ? $profile->firstname :old('firstname', $profile->firstname) }}" class="form-control" />
+                                    <input type="text" name="firstname" value="{{$profile->firstname !== null ? $profile->firstname :old('firstname', $profile->firstname) }}" class="form-control"  placeholder="Enter your firstname"/>
 
                                     <span class="text-danger">
                                         @if($errors->has('firstname'))
@@ -79,7 +79,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Last Name</label>
                             <div class="col-sm-9">
-                                <input type="text" value="{{$profile->lastname !== null ? $profile->lastname :old('lastname', $profile->lastname) }}" name="lastname" class="form-control" />
+                                <input type="text" value="{{$profile->lastname !== null ? $profile->lastname :old('lastname', $profile->lastname) }}" name="lastname" class="form-control" placeholder="Enter your lastname" />
                                 <span class="text-danger">
                                     @if($errors->has('lastname'))
                                         {{ $lastname= $errors->first('lastname')}}
@@ -96,7 +96,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Middle Name</label>
                             <div class="col-sm-9">
-                                <input type="text"value="{{$profile->middlename !== null ? $profile->middlename :old('middlename', $profile->middlename) }}"  name="middlename" class="form-control" />
+                                <input type="text"value="{{$profile->middlename !== null ? $profile->middlename :old('middlename', $profile->middlename) }}"  name="middlename" class="form-control"  placeholder="Enter your middlename"/>
                                 <span class="text-danger">
                                     @if($errors->has('middlename'))
                                         {{ $middlename= $errors->first('middlename')}}
@@ -174,7 +174,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Phone Number</label>
                             <div class="col-sm-9">
-                                <input type="text" name="phone"  value="{{$profile->phone_number !== null ? $profile->phone_number :old('phone',$profile->phone_number) }}" class="form-control" />
+                                <input type="text" name="phone"  value="{{$profile->phone_number !== null ? $profile->phone_number :old('phone',$profile->phone_number) }}" class="form-control" placeholder="Enter phone number" />
                                 <span class="text-danger">
                                     @if($errors->has('phone'))
                                     {{ $phone=$errors->first('phone')}}
@@ -274,7 +274,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Address 1</label>
                             <div class="col-sm-9">
-                                <input type="text" name="address1" value="{{$profile->address_1 !== null ? $profile->address_1 :old('address1',$profile->address_1)}}" class="form-control">
+                                <input type="text" name="address1" value="{{$profile->address_1 !== null ? $profile->address_1 :old('address1',$profile->address_1)}}" class="form-control" placeholder="Enter Address">
                                 <span class="text-danger">
                                     @if($errors->has('address1'))
                                     {{ $address1='The address field is required.'}}
@@ -314,7 +314,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Hobbies</label>
                             <div class="col-sm-9">
-                                <input type="text" name="hobbies"  value="{{$profile->hobbies !== null ? $profile->hobbies :old('hobbies',$profile->hobbies) }}" class="form-control" />
+                                <input type="text" name="hobbies"  value="{{$profile->hobbies !== null ? $profile->hobbies :old('hobbies',$profile->hobbies) }}" class="form-control" placeholder="Enter hobbies"/>
                                 <span class="text-danger">
                                     @if($errors->has('hobbies'))
                                     {{ $hobbies=$errors->first('hobbies')}}
@@ -354,7 +354,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Address 2</label>
                             <div class="col-sm-9">
-                                <input type="text" name="address2" value="{{$profile->address_2 !== null ? $profile->address_2 :old('address2',$profile->address_2)}}" class="form-control" />
+                                <input type="text" name="address2" value="{{$profile->address_2 !== null ? $profile->address_2 :old('address2',$profile->address_2)}}" class="form-control" placeholder="Enter address"/>
                                 <span class="text-danger">
                                     @if($errors->has('address2'))
                                         {{ $localG='The address field is required.'}}
@@ -369,7 +369,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Country</label>
                             <div class="col-sm-9">
-                            <input type="text" name="country" value="{{$profile->country !== null ? $profile->country :old('country',$profile->country)}}" class="form-control" />
+                            <input type="text" name="country" value="{{$profile->country !== null ? $profile->country :old('country',$profile->country)}}" class="form-control" placeholder="Enter country"/>
                                 <span class="text-danger">
                                     @if($errors->has('country'))
                                     {{ $localG=$errors->first('country')}}
@@ -401,7 +401,7 @@
                             <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Postal Code</label>
                             <div class="col-sm-9">
-                                <input type="text" name="postalCode" value="{{$profile->postalCode !== null ? $profile->postalCode :old('postalCode',$profile->postalCode)}}"  class="form-control" />
+                                <input type="text" name="postalCode" value="{{$profile->postalCode !== null ? $profile->postalCode :old('postalCode',$profile->postalCode)}}"  class="form-control" placeholder="Enter postal code"/>
                                 <span class="text-danger">
                                     @if($errors->has('postalCode'))
                                         {{ $postalCode=$errors->first('postalCode')}}
@@ -413,6 +413,63 @@
                             </div>
                         </div>
                     </div>
+                    <p class="card-description">Brief description about yourself</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea name="description" class="form-control" placeholder="Enter short decrption about yourself" rows=5>{{$profile->description !== null ? $profile->description :old('description',$profile->description)}}</textarea>
+                                <span class="text-danger">
+                                    @if($errors->has('description'))
+                                        {{ $description=$errors->first('description')}}
+                                    @else
+                                        {{$description=''}}
+                                    @endif
+                                </span>
+                            </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <p class="card-description">Social Media Section</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Facebook</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="facebook" value="{{$profile->facebook !== null ? $profile->facebook :old('facebook',$profile->facebook)}}"  class="form-control" placeholder="Enter facebook link handle" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">X(Twitter)</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="twitter" value="{{$profile->twitter !== null ? $profile->twitter :old('twitter',$profile->twitter)}}"  class="form-control" placeholder="Enter twitter link handle"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Instagram</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="instagram" value="{{$profile->instagram !== null ? $profile->instagram :old('instagram',$profile->instagram)}}"  class="form-control" placeholder="Enter instagram link handle"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label">Linkedin</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="linkedin" value="{{$profile->linkedin !== null ? $profile->linkedin :old('linkedin',$profile->linkedin)}}"  class="form-control" placeholder="Enter linkedin link handle"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                       
                     <div class="row">
                       <div class="col-md-6 offset-sm-6 col-sm-6">
                         <div class="form-group d-flex justify-content-end">
@@ -424,57 +481,6 @@
                 </div>
             </div>
         </div>
-       <!-- <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                <h4 class="card-title">Select 2</h4>
-                <div class="form-group">
-                    <label>Single select box using select 2</label>
-                    <select class="js-example-basic-single w-100">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Multiple select using select 2</label>
-                    <select class="js-example-basic-multiple w-100" multiple="multiple">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                    <option value="AM">America</option>
-                    <option value="CA">Canada</option>
-                    <option value="RU">Russia</option>
-                    </select>
-                </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                <h4 class="card-title">Typeahead</h4>
-                <p class="card-description">
-                    A simple suggestion engine
-                </p>
-                <div class="form-group row">
-                    <div class="col">
-                    <label>Basic</label>
-                    <div id="the-basics">
-                        <input class="typeahead" type="text" placeholder="States of USA">
-                    </div>
-                    </div>
-                    <div class="col">
-                    <label>Bloodhound</label>
-                    <div id="bloodhound">
-                        <input class="typeahead" type="text" placeholder="States of USA">
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>-->
     </div>
 </div>
 <!-- content-wrapper ends -->

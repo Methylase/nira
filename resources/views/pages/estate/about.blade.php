@@ -36,9 +36,9 @@
               <img src="{{asset('estate/img/slide-about-1.jpg')}}" alt="" class="img-fluid">
             </div>
             <div class="sinse-box">
-              <h3 class="sinse-title">EstateAgency
+              <h3 class="sinse-title">Nira Properties
                 <span></span>
-                <br> Sinse 2017
+                <br> Since 2017
               </h3>
               <p>Art & Creative</p>
             </div>

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Profile;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -59,5 +61,10 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    function profile(){
+    return $this->hasOne('App\Profile');
+  
     }
 }

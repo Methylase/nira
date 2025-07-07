@@ -5,13 +5,13 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Nira Properties - Index</title>
+  <title>Nira Properties - Home</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  <meta name="csrf-token" content="{{csrf_token()}}"> 
   <!-- Favicons -->
-  <link href="{{asset('estate/img/favicon.png')}}" rel="icon">
-  <link href="{{asset('estate/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+  <link href="{{asset('images/favicon.ico')}}" rel="icon">
+  <link href="{{asset('images/favicon.ico')}}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
@@ -24,6 +24,7 @@
 
   <!-- Template Main CSS File -->
   <link href="{{asset('estate/css/style.css')}}" rel="stylesheet">
+  <script src="{{asset('estate/js/jquery.min.js')}}"></script>
 </head>
 
 <body>
@@ -130,17 +131,17 @@
         <span></span>
         <span></span>
       </button>
-      <a class="navbar-brand text-brand" href="index.html">Nira<span class="color-b"> Properties</span></a>
+      <a class="navbar-brand text-brand" href="/">Nira<span class="color-b"> Properties</span></a>
 
       <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('blogs')) ? 'active': ''}}" href="/">Home</a>
+            <a class="nav-link  {{(request()->is('/')) ? 'active': ''}}" href="/">Home</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('about')) ? 'active': ''}}" href="/about">About</a>
+            <a class="nav-link {{ (request()->is('about')) ? 'active': ''}}" href="/about">About</a>
           </li>
 
           <li class="nav-item">
@@ -162,9 +163,9 @@
           <li class="nav-item">
             <a class="nav-link {{(request()->is('contact')) ? 'active': ''}}" href="/contact">Contact</a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link {{(request()->is('admin')) ? 'active': ''}}" href="/admin/dashboard">Admin</a>
-          </li>          
+          </li>-->         
         </ul>
       </div>
 
@@ -175,89 +176,45 @@
     </div>
   </nav><!-- End Header/Navbar -->
 
-  <!-- ======= Intro Section ======= -->
-  <div class="intro intro-carousel swiper position-relative">
+    
+    @if(isset($carouselProperties))
+      <!-- ======= Intro Section ======= -->
+      <div class="intro intro-carousel swiper position-relative">
 
-    <div class="swiper-wrapper">
-
-      <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({{asset('estate/img/slide-1.jpg')}}">
-        <div class="overlay overlay-a"></div>
-        <div class="intro-content display-table">
-          <div class="table-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8">
-                  <div class="intro-body">
-                    <p class="intro-title-top">Doral, Florida
-                      <br> 78345
-                    </p>
-                    <h1 class="intro-title mb-4 ">
-                      <span class="color-b">204 </span> Mount
-                      <br> Olive Road Two
-                    </h1>
-                    <p class="intro-subtitle intro-price">
-                      <a href="#"><span class="price-a">rent | $ 12.000</span></a>
-                    </p>
+        <div class="swiper-wrapper">
+        
+            @foreach ($carouselProperties as $carouselProperty )
+              <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({{asset('/property_images/'.$carouselProperty->id.'/'.$carouselProperty->image)}}">
+                <div class="overlay overlay-a"></div>
+                <div class="intro-content display-table">
+                  <div class="table-cell">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-lg-8">
+                          <div class="intro-body">
+                            <p class="intro-title-top"><?= $carouselProperty->localG.', '.$carouselProperty->state?>
+                              <br> <?= $carouselProperty->postalCode ?>
+                            </p>
+                            <h1 class="intro-title mb-4 ">
+                              <span class="color-b"><?= substr($carouselProperty->address,0, 3) ?></span> 
+                              <br><?= substr($carouselProperty->address, 4) ?>
+                            </h1>
+                            <p class="intro-subtitle intro-price">
+                              <a href="#"><span class="price-a"><?= $carouselProperty->type ?> | &#8358;<?= number_format($carouselProperty->amount,2) ?></span></a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            @endforeach
         </div>
+        <div class="swiper-pagination"></div>
       </div>
-      <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({{asset('estate/img/slide-2.jpg')}}">
-        <div class="overlay overlay-a"></div>
-        <div class="intro-content display-table">
-          <div class="table-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8">
-                  <div class="intro-body">
-                    <p class="intro-title-top">Doral, Florida
-                      <br> 78345
-                    </p>
-                    <h1 class="intro-title mb-4">
-                      <span class="color-b">204 </span> Rino
-                      <br> Venda Road Five
-                    </h1>
-                    <p class="intro-subtitle intro-price">
-                      <a href="#"><span class="price-a">rent | $ 12.000</span></a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide carousel-item-a intro-item bg-image" style="background-image: url({{asset('estate/img/slide-3.jpg')}}">
-        <div class="overlay overlay-a"></div>
-        <div class="intro-content display-table">
-          <div class="table-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8">
-                  <div class="intro-body">
-                    <p class="intro-title-top">Doral, Florida
-                      <br> 78345
-                    </p>
-                    <h1 class="intro-title mb-4">
-                      <span class="color-b">204 </span> Alira
-                      <br> Roan Road One
-                    </h1>
-                    <p class="intro-subtitle intro-price">
-                      <a href="#"><span class="price-a">rent | $ 12.000</span></a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="swiper-pagination"></div>
-  </div><!-- End Intro Section -->
+      <!-- End Intro Section -->
+    @endif
   @yield('content')
 
   <!-- ======= Footer ======= -->
@@ -296,13 +253,13 @@
               <div class="w-body-a">
                 <ul class="list-unstyled">
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#">Site Map</a>
+                    <i class="bi bi-chevron-right"></i> <a href="/about">About Us</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#">Legal</a>
+                    <i class="bi bi-chevron-right"></i> <a href="/properties">Properties</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#">Admin</a>
+                    <i class="bi bi-chevron-right"></i> <a href="/contact">Contact</a>
                   </li>
                 </ul>
               </div>
@@ -315,15 +272,16 @@
               <h3 class="w-title-a text-brand">Others</h3>
             </div>
             <div class="w-body-a">
+              
               <ul class="list-unstyled">
                 <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#">Careers</a>
+                    <i class="bi bi-chevron-right"></i> <a href="/blogs">Blogs</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#">Affiliate</a>
+                    <i class="bi bi-chevron-right"></i> <a href="/testimony">Testimony</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="#">Privacy Policy</a>
+                    <i class="bi bi-chevron-right"></i> <a href="/private-policy">Privacy Policy</a>
                   </li>
               </ul>
             </div>
@@ -336,25 +294,6 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <nav class="nav-footer">
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a href="/">Home</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="/about">About</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="/properties">Properties</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="/blogs">Blogs</a>
-              </li>
-              <li class="list-inline-item">
-                <a href="/contact">Contact</a>
-              </li>
-            </ul>
-          </nav>
           <div class="socials-a">
             <ul class="list-inline">
               <li class="list-inline-item">
@@ -399,10 +338,15 @@
   <!-- Vendor JS Files -->
   <script src="{{asset('estate/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('estate/vendor/swiper/swiper-bundle.min.js')}}"></script>
-  <script src="{{asset('estate/vendor/php-email-form/validate.js')}}"></script>
 
   <!-- Template Main JS File -->
   <script src="{{asset('estate/js/main.js')}}"></script>
+  <script>
+     function onSelectChange(){
+        document.getElementById('form').submit();
+     }
+  </script>
+
 
 </body>
 

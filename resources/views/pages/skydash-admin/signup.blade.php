@@ -1,12 +1,12 @@
 @extends('layouts.container')
   @section('content')
    <div class="brand-logo">
-      <h2 class="text-left text-success">Nira Properties</h2>
+      <h2 class="text-left text-success"><img src="{{asset('images/cover.png')}}"></h2>
     </div>
     <h4>New here?</h4>
     <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
     @if(session()->has('successMessage'))
-        <div class="offset-md-1 col-md-10 offset-sm-1 col-sm-10 alert
+        <div class="col-md-12  col-sm-12 alert
         alert-success alert-dismissable text-center" style="margin-top:20px">
             <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
             <strong>
@@ -16,7 +16,7 @@
         </div>
     @endif
     @if(session()->has('errorMessage'))
-        <div class="offset-md-1 col-md-10 offset-sm-1 col-sm-10 alert
+        <div class="col-md-12 col-sm-12 alert
         alert-danger alert-dismissable text-center" style="margin-top:20px">
         <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
         <strong>
@@ -27,7 +27,7 @@
     @endif
 
     @if(session()->has('agreement'))
-      <div class="offset-md-1 col-md-10 offset-sm-1 col-sm-10 alert
+      <div class="col-md-12 col-sm-12 alert
       alert-danger alert-dismissable text-center" style="margin-top:20px">
         <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
         <strong>
@@ -37,7 +37,7 @@
       </div>
     @endif
 
-    <form method="POST" action="{{route('signup')}}" class="pt-3">
+    <form method="POST" action="/signup" class="pt-3">
         {{csrf_field()}}
         <div class="form-group">
             <input type="text" name="username" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">

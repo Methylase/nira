@@ -4,21 +4,27 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{csrf_token()}}"> 
   <title>Nira - {{$title}}</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/feather/feather.css')}}">
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/ti-icons/css/themify-icons.css')}}">
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/css/vendor.bundle.base.css')}}">
+  <link href="{{asset('skydash-admin/template/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/datatables.net-bs4/dataTables.bootstrap4.css')}}">
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/ti-icons/css/themify-icons.css')}}">
   <link rel="stylesheet" type="text/css" href="{{asset('skydash-admin/template/js/select.dataTables.min.css')}}">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{{asset('skydash-admin/template/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('skydash-admin/template/images/favicon.png')}}" />
+
+  <link href="{{asset('images/favicon.ico')}}" rel="icon">
+  <link href="{{asset('images/favicon.ico')}}" rel="apple-touch-icon">
+ 
   <script src="{{asset('skydash-admin/template/js/jquery.min.js')}}"></script>
   <script>
         // json to get state and local government to fill state and local goverment dropdown
@@ -37,6 +43,20 @@
             })
           });
         });
+
+       
+    $(".state").select2({
+      multiple: true,
+      placeholder: "Select state",
+      allowClear: true
+    });
+
+    $(".amenities").select2({
+      multiple: true,
+      placeholder: "Select Amenities",
+      allowClear: true
+    });
+  
   </script>
 </head>
 <body>
@@ -44,8 +64,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="{{route('dashboard')}}"><strong>Nira</strong></a>
-        <a class="navbar-brand brand-logo-mini" href="{{route('dashboard')}}"><strong>Nira</strong></a>
+        <a class="navbar-brand brand-logo mr-5" href="{{route('dashboard')}}"><img src="{{asset('images/cover.png')}}"></a>
+        <a class="navbar-brand brand-logo-mini" href="{{route('dashboard')}}"><img src="{{asset('images/cover.png')}}"></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -53,7 +73,7 @@
         </button>
 
         <ul class="navbar-nav navbar-nav-right">
-          @if(Auth::user()->hasRole('ROLE_SUPERADMIN'))
+          @if(Auth::user()->hasRole('ROLE_ADMIN'))
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="icon-bell mx-0"></i>
@@ -70,9 +90,6 @@
                 <div class="preview-item-content">
                   @if($usersCount!==0)
                   <h6 class="preview-subject font-weight-normal"> <span>{{$usersCount}}</span> New user registration</h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
-                  </p>
                   @else
                   <h6 class="preview-subject font-weight-normal"> No new user registration</h6>
                   @endif
@@ -81,16 +98,14 @@
             </div>
           </li>
           @endif
-
-
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="{{isset($profile->profile_image) && $profile->profile_image !=='' ? url('uploads/'.$profile->profile_image) : asset('images/user.jpg') }}" alt="profile image"/>
+              <img src="{{isset($profile->profile_image) && $profile->profile_image !=='' ? url('uploads/'.$profile->id.'/'.$profile->profile_image) : asset('images/user.jpg') }}" alt="profile image"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault();
+              <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
        document.getElementById('logout-form').submit()">
-                <i class="ti-power-off text-primary"></i>
+                <i class="ti-power-off text-success"></i>
                 Logout
               </a>
             </div>
@@ -257,17 +272,41 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item {{(request()->is('admin')) ? 'active': ''}}">
+          <li class="nav-item {{(request()->is('/')) ? 'active': ''}}">
             <a class="nav-link" href="{{route('dashboard')}}">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-
-          @if(Auth::user()->hasRole('ROLE_ADMIN'))
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#profile" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="#properties" aria-expanded="false" aria-controls="ui-basic">
               <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Properties</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="properties">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('add-property')}}">Add property</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('list-properties')}}">List Properties</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#blogs" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Blogs</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="blogs">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('post')}}">Post Blog</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{{route('posts')}}">Blog Posts</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#profile" aria-expanded="false" aria-controls="profile">
+              <i class="icon-head menu-icon"></i>
               <span class="menu-title">Profile</span>
               <i class="menu-arrow"></i>
             </a>
@@ -278,7 +317,10 @@
               </ul>
             </div>
           </li>
-          @endif
+
+          @can('is_agent')
+
+          @endcan   
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="icon-columns menu-icon"></i>
@@ -353,6 +395,27 @@
               </ul>
             </div>
           </li>
+          @if(Auth::user()->hasRole('ROLE_ADMIN'))
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#settings" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Settings</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="settings">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{{route('settings')}}">Settings</a></li>
+              </ul>
+            </div>
+          </li>
+          @endif
+          <li class="nav-item logout-item">
+            <a class="nav-link" href="/logout" onclick="event.preventDefault();
+       document.getElementById('logout-form').submit()">
+              <i class="ti-power-off menu-icon"></i>
+              <span class="menu-title">Logout</span>
+            </a>
+          </li>
         </ul>
       </nav>
 
@@ -363,7 +426,7 @@
         <!-- partial:partials/_footer.html -->
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © {{$date}}<a href="/" target="_blank"> Codeden</a> All rights reserved.</span>
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © {{$date}}<a href="/" target="_blank"> Nira Properties</a> All rights reserved.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
           </div>
         </footer>
@@ -375,6 +438,8 @@
   </div>
   <!-- container-scroller -->
 
+
+  <script src="{{asset('skydash-admin/template/js/jquery.min.js')}}"></script>
   <!-- plugins:js -->
   <script src="{{asset('skydash-admin/template/vendors/js/vendor.bundle.base.js')}}"></script>
   <!-- endinject -->
@@ -391,15 +456,142 @@
   <script src="{{asset('skydash-admin/template/js/template.js')}}"></script>
   <script src="{{asset('skydash-admin/template/js/settings.js')}}"></script>
   <script src="{{asset('skydash-admin/template/js/todolist.js')}}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script src="{{asset('skydash-admin/template/js/select2.js')}}"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
   <script src="{{asset('skydash-admin/template/js/dashboard.js')}}"></script>
   <script src="{{asset('skydash-admin/template/js/Chart.roundedBarCharts.js')}}"></script>
+  <script src="https://cdn.tiny.cloud/1/kwyfuup9xar7ipht7wq534bbq5w3vvzhqvvw3h3slpwonyku/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
   <!-- End custom js for this page-->
   <form id='logout-form' action="{{route('logout')}}"
     method="POST" style='display:none'>
         {{csrf_field()}}
   </form>
+  <script>
+    (function($) {
+      'use strict';
+      $(function() {
+        $('#list-properties').dataTable( {
+          "aLengthMenu":[[10,2,5,15,20,50,100,200, 500,-1], [10,2,5,10,15,20,50,100,200,500, "All"]],
+          "iDisplayLenghth": 10,
+            "paginate": true,
+            "sort": true
+          } );
+      });
+    })(jQuery);
+
+
+    $(document).on('change', '.file-input', function() {
+        var filesCount = $(this)[0].files.length;
+        
+        var textbox = $(this).prev();
+      
+        if (filesCount === 1) {
+          var fileName = $(this).val().split('\\').pop();
+          textbox.text(fileName);
+        } else {
+          textbox.text(filesCount + ' files selected');
+        }
+    });
+
+        // grant user access
+        $('.grant-access').on('click', function(){
+  
+          $('.user-group').empty();
+          $('.user-type-group').empty();
+          $('.message_success').empty();
+          var user =  $('#user').val();
+          var access_type =  $('#access-type').val(); 
+          var token =$("meta[name='csrf-token']").attr("content");
+          values= {
+            "user":user,
+            "access_type": access_type,
+            "_token": token
+          }
+          $.ajax({
+              type: "POST",
+              url: "grant_access",
+              data: values,
+              dataType: 'json',
+          }).done(function(result){
+            if (result.user=='failure'){
+              $(".user-group").append(result.error_message); 
+            }else if(result.access_type=='failure'){
+                $(".user-type-group").append(result.error_message)
+            }              
+            if (result.status=='success'){
+              $(".message_success").prepend(result.message); 
+              setTimeout(function(){
+              location.reload();
+              }, 3000);
+            }
+          });
+        });   
+
+       $('.deleteProperty').on('click', function(){
+          var delProperty = $(this).attr('id');
+          alert(delProperty);
+          delProperty = delProperty.split(' ');
+          $('.del_property').attr('id', 'del_property'+delProperty[1])
+          $('#del_property'+delProperty[1]).on('click', function(){
+          var token =$("meta[name='csrf-token']").attr("content");
+          values= {
+            "PropertyId": delProperty[1],
+            "_token": token,
+          }
+
+          // delete staff
+          $.ajax({
+              type: "DELETE",
+              url: "/delete-property/"+delProperty[1],
+              data: values,
+          }).done(function(result){
+            if (result.success=='success'){
+              $('#confirm-delete').modal('hide');
+              $("#property-body").prepend("<div class='status alert alert-success text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>"); 
+              setTimeout(function(){
+              location.reload();
+              }, 6000);
+            }else if(result.success=='fail'){
+                $("#property-body").prepend("<div class='status alert alert-danger text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>");
+              setTimeout(function(){
+              location.reload();
+              }, 6000);                  
+            }
+          });
+          });
+        });      
+
+    /*  tinymce.init({
+      selector: 'textarea#description',
+      skin: 'bootstrap',
+      plugins: 'lists, link, image, media',
+      toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+      menubar: true,
+    });*/
+
+  /*tinymce.init({
+    selector: 'textarea#description',
+    plugins: [
+      // Core editing features
+      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      // Your account includes a free trial of TinyMCE premium features
+      // Try the most popular premium features until Mar 19, 2025:
+      'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+  });*/
+
+  </script>
+  
 </body>
 
 </html>

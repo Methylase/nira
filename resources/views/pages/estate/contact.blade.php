@@ -32,38 +32,81 @@
         <section class="contact">
         <div class="container">
             <div class="row">
-            <div class="col-sm-12">
-                <div class="contact-map box">
-                <div id="map" class="contact-map">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.1422937950147!2d-73.98731968482413!3d40.75889497932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes+Square!5e0!3m2!1ses-419!2sve!4v1510329142834" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
-                </div>
-                </div>
-            </div>
             <div class="col-sm-12 section-t8">
                 <div class="row">
+                @if(session()->has('successMessage'))
+                    <div class="col-md-12 alert
+                    alert-success alert-dismissable text-center" style="margin-top:20px">
+                        <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
+                        <strong>
+                        Success
+                        </strong>
+                        {{session('successMessage')}}
+                    </div>
+                @endif
+                @if(session()->has('errorMessage'))
+                    <div class="col-md-12 alert alert
+                    alert-danger alert-dismissable text-center" style="margin-top:20px">
+                    <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
+                    <strong>
+                        Danger
+                    </strong>
+                    {{session('errorMessage')}}
+                    </div>
+                @endif 
+
                 <div class="col-md-7">
-                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                    <form action="/contact" method="POST" role="form" class="php-email-form">
+                    {{csrf_field()}}
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <input type="text" name="name" class="form-control form-control-lg form-control-a" placeholder="Your Name" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control form-control-lg form-control-a" placeholder="Your Name" required>
+                                @if($errors->has('name'))
+                                    <span class="text-danger">
+                                        {{ $name= $errors->first('name')}}
+                                    </span>
+                                @else
+                                    {{$name=''}}
+                                @endif
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                        <div class="form-group">
-                            <input name="email" type="email" class="form-control form-control-lg form-control-a" placeholder="Your Email" required>
-                        </div>
+                            <div class="form-group">
+                                <input name="email" type="email" class="form-control form-control-lg form-control-a" placeholder="Your Email" required>
+                                @if($errors->has('email'))
+                                    <span class="text-danger">
+                                        {{ $email= $errors->first('email')}}
+                                    </span>
+                                @else
+                                    {{$email=''}}
+                                @endif                                        
+                            </div>
                         </div>
                         <div class="col-md-12 mb-3">
-                        <div class="form-group">
-                            <input type="text" name="subject" class="form-control form-control-lg form-control-a" placeholder="Subject" required>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" name="subject" class="form-control form-control-lg form-control-a" placeholder="Subject" required>
+                                @if($errors->has('subject'))
+                                    <span class="text-danger">
+                                        {{ $subject= $errors->first('subject')}}
+                                    </span>
+                                @else
+                                    {{$subject=''}}
+                                @endif                                        
+                            </div>
                         </div>
                         <div class="col-md-12">
-                        <div class="form-group">
-                            <textarea name="message" class="form-control" name="message" cols="45" rows="8" placeholder="Message" required></textarea>
-                        </div>
-                        </div>
+                            <div class="form-group">
+                                <textarea name="message" class="form-control" cols="45" rows="8" placeholder="Message" required></textarea>
+                                @if($errors->has('message'))
+                                    <span class="text-danger">
+                                        {{ $message= $errors->first('message')}}
+                                    </span>
+                                @else
+                                    {{$message=''}}
+                                @endif                                        
+                            </div>
+                        </div>  
                         <div class="col-md-12 my-3">
                         <div class="mb-3">
                             <div class="loading">Loading</div>
@@ -89,10 +132,10 @@
                         </div>
                         <div class="icon-box-content">
                         <p class="mb-1">Email.
-                            <span class="color-a">contact@example.com</span>
+                            <span class="color-a">contact@codeden@gmail.com</span>
                         </p>
                         <p class="mb-1">Phone.
-                            <span class="color-a">+54 356 945234</span>
+                            <span class="color-a">+2348188373898</span>
                         </p>
                         </div>
                     </div>
@@ -107,8 +150,8 @@
                         </div>
                         <div class="icon-box-content">
                         <p class="mb-1">
-                            Manhattan, Nueva York 10036,
-                            <br> EE. UU.
+                            Ogba Ikeja, Lagos
+                            <br> Nigeria.
                         </p>
                         </div>
                     </div>

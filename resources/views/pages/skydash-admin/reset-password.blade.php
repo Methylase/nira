@@ -26,7 +26,7 @@
                         </div>
                     @endif
                     <h4 class="card-title">Reset Password</h4>
-                    <form class="form" action="{{route('reset-password')}}" method="POST">
+                    <form class="form" action="/reset-password" method="POST">
                         {{csrf_field()}}
                         <div class="row">
                             <div class="col-md-6 col-sm-6">

@@ -20,9 +20,10 @@ class CheckRole
                 return $next($request);          
             }
          
-            return redirect('/admin/dashboard');
+            return redirect()->route('dashboard');
         }else{
-            return redirect('/admin/login');
+            return redirect()->route('login');
         }
     }
+
 }

@@ -3,7 +3,7 @@
     <div class="brand-logo">
       <h2 class="text-left text-success">Nira Properties</h2>
     </div>
-    <h4>Great! let's get started</h4>
+    <h4>Great! let's get your latest password</h4>
     <h6 class="font-weight-light">Forgot Password.</h6>
     @if(session()->has('messageSuccess'))
         <div class="offset-md-1 col-md-10 offset-sm-1 col-sm-10 alert

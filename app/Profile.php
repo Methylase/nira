@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class profile extends Model
 {
@@ -25,9 +27,19 @@ class profile extends Model
        'state',
        'localG',
        'country',
-       'postalCode'
+       'postalCode',
+       'description',
+       'facebook',
+       'twitter',
+       'instagram',
+       'linkedin'
 
    ];   
   protected $table='profiles';
   protected $primaryKey='id';
+   
+    function user() {
+     return $this->belongsTo('App\User');
+
+    }
 }

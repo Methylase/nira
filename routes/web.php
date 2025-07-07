@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Services\CalculatorService;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,37 +19,61 @@ Route::get('/about', 'EstateController@about');
 Route::get('/blogs', 'EstateController@blogs');
 Route::get('/blog/{name?}', 'EstateController@blog')->name('blog');
 Route::get('/properties', 'EstateController@properties');
-Route::get('/property', 'EstateController@property');
+Route::post('/properties', 'EstateController@properties')->name('properties');
+Route::get('/property/{id}', 'EstateController@property')->name('property')->where('id','.*');
 Route::get('/agents', 'EstateController@agents');
 Route::get('/agent/{name?}', 'EstateController@agent')->name('agent');
-Route::get('/contact', 'EstateController@contact');
+Route::get('/contact', 'EstateController@contact')->name('contact');
+Route::post('/contact', 'EstateController@contact');
+Route::get('/testimony', 'EstateController@testimony')->name('testimony');
+Route::post('/testimony', 'EstateController@testimony');
 
 Route::group(['middleware'=>'guest'], function(){
-    Route::get('/admin', 'AdminController@login')->name('login');
-    Route::get('/admin/', 'AdminController@login')->name('login');
-    Route::get('/admin/login', 'AdminController@login')->name('login');
-    Route::get('/admin/signup', 'AdminController@signup')->name('signup');
-    Route::post('/admin/login', 'AdminController@loginPost')->name('login');
-    Route::post('/admin/signup', 'AdminController@signupPost')->name('signup');
-    Route::get('admin/logout', 'AdminController@logout')->name('logout');
-    Route::get('admin/forgot-password', 'AdminController@forgotPassword')->name('forgot-password');
-    Route::post('admin/forgot-password', 'AdminController@forgotPassword');
-    Route::get('admin/change-password/{name?}', 'AdminController@changePassword')->name('change-password')->where('name','.*');
-    Route::post('admin/password', 'AdminController@password')->name('password');
+    Route::get('/login', 'AdminController@login')->name('login');
+    Route::post('/login', 'AdminController@loginPost');
+    Route::get('/signup', 'AdminController@signup')->name('signup');
+    Route::post('/signup', 'AdminController@signup');
+    Route::get('/logout', 'AdminController@logout')->name('logout');
+    Route::get('/forgot-password', 'AdminController@forgotPassword')->name('forgot-password');
+    Route::post('/forgot-password', 'AdminController@forgotPassword');
+    Route::get('/change-password/{name?}', 'AdminController@changePassword')->name('change-password')->where('name','.*');
+    Route::post('/password', 'AdminController@password')->name('password');
 });
 
-Route::group(['middleware'=>'auth'],function(){
-    Route::get('/admin/dashboard','AdminController@index')->name('dashboard');
-    Route::post('/admin/logout', 'AdminController@logout')->name('logout');
+
+Route::group(['middleware'=>['auth','preventBackHistory']],function(){
+
+    Route::get('/dashboard','AdminController@index')->name('dashboard');
+    Route::post('/logout', 'AdminController@logout');
+    Route::get('/setup-profile', 'AdminController@setupProfile')->name('setup-profile');
+    Route::post('/setup-profile', 'AdminController@setupProfile');
+    Route::get('/reset-password', 'AdminController@resetPassword')->name('reset-password');
+    Route::post('/reset-password', 'AdminController@resetPassword');
+    Route::get('/add-property', 'AdminController@addProperty')->name('add-property');
+    Route::post('/add-property', 'AdminController@addProperty');
+    Route::get('/edit-property/{id}', 'AdminController@editProperty')->name('edit-property')->where('id','.*');
+    Route::put('/update-property', 'AdminController@updateProperty');
+    Route::get('/list-properties', 'AdminController@listProperties')->name('list-properties');
+    Route::delete('/delete-property/{id}', 'AdminController@deleteProperty')->name('delete-property');
+
+    Route::group(['middleware'=>['role:ROLE_ADMIN']],function(){
+        Route::get('/post', 'AdminController@setupProfile')->name('post');
+        Route::post('/post', 'AdminController@setupProfile');
+        Route::get('/posts', 'AdminController@setupProfile')->name('posts');
+        Route::get('/settings', 'AdminController@settings')->name('settings');
+        Route::post('/grant_access', 'AdminController@grant_access')->name('grant_access');
+ 
+    });
+
+    Route::group(['middleware'=>['role:ROLE_AGENT']],function(){
+    
+    });
+
+
 });
 
-Route::group(['middleware'=>['auth','role:ROLE_ADMIN']],function(){
-    Route::get('/admin/setup-profile', 'AdminController@setupProfile')->name('setup-profile');
-    Route::post('/admin/setup-profile', 'AdminController@setupProfile')->name('setup-profile');
-    Route::get('/admin/reset-password', 'AdminController@resetPassword')->name('reset-password');
-    Route::post('/admin/reset-password', 'AdminController@resetPassword');
-});
 
-Route::middleware(['auth','role:ROLE_SUPERADMIN'])->group(function(){
-    Route::get('/admin/superadmin','SuperadminController@superadmin')->name('superadmin');
-});
+
+
+
+
