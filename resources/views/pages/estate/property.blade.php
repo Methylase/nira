@@ -235,22 +235,70 @@
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-4">
+
+                                @if(session()->has('successMessage'))
+                                    <div class="col-md-12 alert
+                                    alert-success alert-dismissable text-center" style="margin-top:20px">
+                                        <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
+                                        <strong>
+                                        Success
+                                        </strong>
+                                        {{session('successMessage')}}
+                                    </div>
+                                @endif
+                                @if(session()->has('errorMessage'))
+                                    <div class="col-md-12 alert alert
+                                    alert-danger alert-dismissable text-center" style="margin-top:20px">
+                                    <a href='' class='close' data-dismiss='alert' aria-label='close'> &times</a>
+                                    <strong>
+                                        Danger
+                                    </strong>
+                                    {{session('errorMessage')}}
+                                    </div>
+                                @endif
+
                                 <div class="property-contact">
-                                    <form class="form-a">
+                                    <form action="/contact_agent"  method="POST" role="form" class="php-email-form">
+                                        {{csrf_field()}}
+
+                                        <input type="hidden" value="{{$property->user_id}}" name="agent_id">
+                                        <input type="hidden" value="{{$property->id}}" name="property_id">
+
                                         <div class="row">
                                             <div class="col-md-12 mb-1">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-lg form-control-a" id="inputName" placeholder="Name *" required>
+                                                    <input type="text" name="name" class="form-control form-control-lg form-control-a" id="inputName" placeholder="Name *" required>
+                                                    @if($errors->has('name'))
+                                                        <span class="text-danger">
+                                                            {{ $name= $errors->first('name')}}
+                                                        </span>
+                                                    @else
+                                                        {{$name=''}}
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-1">
                                                 <div class="form-group">
-                                                    <input type="email" class="form-control form-control-lg form-control-a" id="inputEmail1" placeholder="Email *" required>
+                                                    <input type="email" name="email" class="form-control form-control-lg form-control-a" id="inputEmail1" placeholder="Email *" required>
+                                                    @if($errors->has('email'))
+                                                        <span class="text-danger">
+                                                            {{ $email= $errors->first('email')}}
+                                                        </span>
+                                                    @else
+                                                        {{$email=''}}
+                                                    @endif 
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mb-1">
                                                 <div class="form-group">
                                                     <textarea id="textMessage" class="form-control" placeholder="Comment *" name="message" cols="45" rows="8" required></textarea>
+                                                    @if($errors->has('message'))
+                                                        <span class="text-danger">
+                                                            {{ $message= $errors->first('message')}}
+                                                        </span>
+                                                    @else
+                                                        {{$message=''}}
+                                                    @endif   
                                                 </div>
                                             </div>
                                             <div class="col-md-12 mt-3">

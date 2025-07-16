@@ -27,6 +27,7 @@ Route::get('/contact', 'EstateController@contact')->name('contact');
 Route::post('/contact', 'EstateController@contact');
 Route::get('/testimony', 'EstateController@testimony')->name('testimony');
 Route::post('/testimony', 'EstateController@testimony');
+Route::post('/contact_agent', 'EstateController@contact_agent');
 
 Route::group(['middleware'=>'guest'], function(){
     Route::get('/login', 'AdminController@login')->name('login');

@@ -9,6 +9,7 @@ use App\Profile;
 use App\Carousel;
 use App\Testimonial;
 use App\Contact;
+use App\Contact_agent;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -251,6 +252,54 @@ class EstateController extends Controller
         }
        
         
-      }   
+      }  
+      
+      
+      public function contact_agent(Request $request){
+        if($_SERVER['REQUEST_METHOD'] =='POST'){
+
+          $data = array();
+        
+          $name = $request->input('name');
+          $email = $request->input('email');
+          $message = $request->input('message');
+          $agent_id = $request->input('agent_id');
+          $property_id = $request->input('property_id');
+
+          $rules=array(
+            'name' => 'required',
+            'email' => 'required|max:255',
+            'message' => 'required'
+          );
+
+
+          $validator= Validator::make($request->all(),$rules);
+          if($validator->fails()){
+            return redirect()->route('property',['id' => $property_id])->withErrors($validator);
+          }else{
+
+ 
+              $data['name'] = protectData($name);
+              $data['email'] = protectData($email);
+              $data['comment'] = protectData($message);
+              $data['user_id'] = protectData($agent_id);
+              $data['property_id'] = protectData($property_id);
+              
+              $contact= Contact_agent::create($data);
+
+              if($contact){
+                $request->session()->flash('successMessage', 'You have successfully submitted your message');
+              }else{
+                $request->session()->flash('errorMessage', 'Oop something went wrong'); 
+              }
+
+              return redirect()->route('property',['id' => $property_id]);
+
+          }          
+
+        }
+        
+      } 
+            
 
 }
