@@ -9,7 +9,10 @@
             <div class="col-md-12 col-lg-8">
                 <div class="title-single-box">
                 <h1 class="title-single">Contact US</h1>
-                <span class="color-text-a">Aut voluptas consequatur unde sed omnis ex placeat quis eos. Aut natus officia corrupti qui autem fugit consectetur quo. Et ipsum eveniet laboriosam voluptas beatae possimus qui ducimus. Et voluptatem deleniti. Voluptatum voluptatibus amet. Et esse sed omnis inventore hic culpa.</span>
+                <span class="color-text-a">
+                    We don't just offer spaces — we deliver peace of mind and lasting value.
+                    Whether you're buying, renting, or investing, we guide you every step of the way.
+                    Reach out today — because where you live or invest should be worth it.</span>
                 </div>
             </div>
             <div class="col-md-12 col-lg-4">
@@ -132,7 +135,7 @@
                         </div>
                         <div class="icon-box-content">
                         <p class="mb-1">Email.
-                            <span class="color-a">contact@codeden@gmail.com</span>
+                            <span class="color-a">info@nira-properties.com.</span>
                         </p>
                         <p class="mb-1">Phone.
                             <span class="color-a">+2348188373898</span>

@@ -10,6 +10,8 @@ use App\Carousel;
 use App\Testimonial;
 use App\Contact;
 use App\Contact_agent;
+use App\Blog;
+use App\Comment;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -29,14 +31,14 @@ class EstateController extends Controller
         $agents = User::inRandomOrder()->limit(3)->with('profile')->get()->skip(1);
         $testimonials = Testimonial::inRandomOrder()->limit(5)->get();
         
-        return view('pages.estate.index',['carouselProperties'=>$carouselProperties, 'agents' => $agents, 'testimonials' => $testimonials, 'latestProperties'=> $latestProperties]);
+        return view('pages.estate.index',['title'=> 'Home','carouselProperties'=>$carouselProperties, 'agents' => $agents, 'testimonials' => $testimonials, 'latestProperties'=> $latestProperties]);
         
       }
 
       //about page
       public function about(){
 
-        return view('pages.estate.about');
+        return view('pages.estate.about', ['title' => 'About Us']);
         
       } 
       
@@ -44,24 +46,25 @@ class EstateController extends Controller
       public function properties(Request $request){
         if($_SERVER['REQUEST_METHOD'] =='POST'){
 
-          $property_type = protectData($request->input('property_type'));
 
-          if($property_type =="all"){
-            $properties = Property::query()->paginate('10');
-          }elseif($property_type =="1"){
-            $properties = Property::query()->orderBy('created_at', 'desc')->paginate('10');
-          }elseif($property_type =="2"){
-            $properties = Property::query()->where('status','rent')->paginate('10');
-          }elseif($property_type =="3"){
-            $properties = Property::query()->where('status','sale')->paginate('10'); 
-          }
+            $property_type = protectData($request->input('property_type'));
 
-          return view('pages.estate.properties',['properties'=> $properties]);
+            if($property_type =="all"){
+              $properties = Property::query()->paginate('10');
+            }elseif($property_type =="1"){
+              $properties = Property::query()->orderBy('created_at', 'desc')->paginate('10');
+            }elseif($property_type =="2"){
+              $properties = Property::query()->where('status','rent')->paginate('10');
+            }elseif($property_type =="3"){
+              $properties = Property::query()->where('status','sale')->paginate('10'); 
+            }
+
+          return view('pages.estate.properties',['title'=> 'Properties','properties'=> $properties, 'property_type'=> $property_type]);
 
         }else{
 
           $properties = Property::query()->paginate('10');
-          return view('pages.estate.properties',['properties'=> $properties]);
+          return view('pages.estate.properties',['title'=> 'Properties','properties'=> $properties]);
           
         }
         
@@ -76,28 +79,62 @@ class EstateController extends Controller
         $agent = Profile::where('user_id',protectData($property->user_id))->get()[0];
 
         $carousels = Carousel::where('property_id', $id)->get();
-        return view('pages.estate.property',['property'=> $property, 'email' =>$email, 'agent'=>$agent, 'carousels'=>$carousels]);
+        return view('pages.estate.property',['title'=> 'property','property'=> $property, 'email' =>$email, 'agent'=>$agent, 'carousels'=>$carousels]);
         
       }  
       
       //blogs page
       public function blogs(){
-
-        return view('pages.estate.blogs');
+        $blogs = Blog::query()->paginate('10');
+        return view('pages.estate.blogs',['title' => 'Blogs', 'blogs' => $blogs]);
         
       } 
       
       //blog page
-      public function blog($name=null){
+      public function blog(Request $request){
 
-        return view('pages.estate.blog');
+        $id = $request->id;
+        $blog = Blog::with(['user.profile'])->findOrFail(protectData($id));
+
+        return view('pages.estate.blog',['title' => 'Blog', 'blog' =>$blog]);
         
-      }   
+      }  
+
+
+      
+      public function comments(Request $request, Blog $blog)
+      {
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'content' => 'required',
+            'email' => 'required',
+            'parent_id' => 'nullable|exists:comments,id',
+        ]);
+
+        $comment = new Comment($validated);
+        $comment->blog_id = $request->blog_id;
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Comment added!');
+      }
+
+      public function reply(Request $request, Comment $comment)
+      {
+          $request->validate(['reply' => 'required']);
+
+          Comment::create([
+              'reply' => $request->reply,
+              'blog_id' => $comment->post_id,
+              'comment_id' => $comment->id,
+          ]);
+
+          return back();
+      }
 
       //agents page
       public function agents(){
 
-        return view('pages.estate.agents');
+        return view('pages.estate.agents', ['title' => 'Agents']);
         
       }        
 
@@ -149,7 +186,7 @@ class EstateController extends Controller
           }          
 
         }else{
-            return view('pages.estate.contact');
+            return view('pages.estate.contact',['title' => 'Contact Us']);
         }
         
       } 
@@ -248,7 +285,7 @@ class EstateController extends Controller
           }
         
         }else{
-             return view('pages.estate.testimony');
+             return view('pages.estate.testimony', ['title' => 'Testimonies']);
         }
        
         

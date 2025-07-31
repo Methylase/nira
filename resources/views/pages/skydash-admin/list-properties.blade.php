@@ -69,7 +69,7 @@
                                                         <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                            <h4 class="modal-title text-info" id="Heading">Delete this Property</h4>
+                                                            <h4 class="modal-title" id="Heading">Delete this Property</h4>
                                                             </div>
                                                             <div class="modal-body">
                                                             <div class="alert alert-danger  format"><span class="fa fa-warning text-danger"></span> Are you sure you want to delete this property?</div>

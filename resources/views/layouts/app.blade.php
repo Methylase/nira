@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Nira Properties - Home</title>
+  <title>Nira - {{$title}}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <meta name="csrf-token" content="{{csrf_token()}}"> 
@@ -32,7 +32,7 @@
   <!-- ======= Property Search Section ======= -->
   <div class="click-closed"></div>
   <!--/ Form Search Star /-->
-  <div class="box-collapse">
+  <!--<div class="box-collapse">
     <div class="title-box-d">
       <h3 class="title-d">Search Property</h3>
     </div>
@@ -121,7 +121,7 @@
         </div>
       </form>
     </div>
-  </div><!-- End Property Search Section -->>
+  </div>--><!-- End Property Search Section -->>
 
   <!-- ======= Header/Navbar ======= -->
   <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
@@ -162,16 +162,13 @@
           </li>-->
           <li class="nav-item">
             <a class="nav-link {{(request()->is('contact')) ? 'active': ''}}" href="/contact">Contact</a>
-          </li>
-          <!--<li class="nav-item">
-            <a class="nav-link {{(request()->is('admin')) ? 'active': ''}}" href="/admin/dashboard">Admin</a>
-          </li>-->         
+          </li>        
         </ul>
       </div>
 
-      <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
+      <!--<button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
         <i class="bi bi-search"></i>
-      </button>
+      </button>-->
 
     </div>
   </nav><!-- End Header/Navbar -->
@@ -228,17 +225,16 @@
             </div>
             <div class="w-body-a">
               <p class="w-text-a color-text-a">
-                Enim minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip exea commodo consequat duis
-                sed aute irure.
+                Nira Properties is a trusted Nigerian real estate company offering affordable land and housing solutions across Lagos and beyond. 
               </p>
             </div>
             <div class="w-footer-a">
               <ul class="list-unstyled">
                 <li class="color-a">
-                  <span class="color-text-a">Phone .</span> contact@example.com
+                  <span class="color-text-a">Phone .</span> +2348188373898
                 </li>
                 <li class="color-a">
-                  <span class="color-text-a">Email .</span> +54 356 945234
+                  <span class="color-text-a">Email .</span> info@nira-properties.com.
                 </li>
               </ul>
             </div>
@@ -345,6 +341,17 @@
      function onSelectChange(){
         document.getElementById('form').submit();
      }
+
+    $('.reply-form').hide();
+    $('.reply').on('click',function(){
+      var id = $(this).attr('id');
+
+      $('#reply'+id).toggle();
+
+
+       
+
+    });
   </script>
 
 

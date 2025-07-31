@@ -24,6 +24,7 @@ use App\Role;
 use App\Profile;
 use App\Property;
 use App\Carousel;
+use App\Blog;
 use Validator;
 use App\Events\SendMail;
 use App\Jobs\SendAdminMail;
@@ -62,14 +63,197 @@ class AdminController extends Controller
         $profile= new Profile;
       }
 
-      return view('pages.skydash-admin.index',['date'=>$date,'profile'=>$profile,'email'=> $email,'userId'=>$userId, 'usersCount'=>$usersCount, 'title'=>'Profile']);
+      return view('pages.skydash-admin.index',['date'=>$date,'profile'=>$profile,'email'=> $email,'userId'=>$userId, 'usersCount'=>$usersCount, 'title'=>'Dashboard']);
 
     }
+    
+    //create new blog post
+    public function blogPost(Request $request)
+    {
+
+      $userId = Auth::user()->id;
+      $email = Auth::user()->email;
+      $usersCount= User::where("check", "new")->get()->count();
+      $date = date('Y');
+      if(Profile::where("user_id",$userId)->exists()){
+        $profile = Profile::where("user_id",$userId)->first();
+
+      }else{
+        $profile= new Profile;
+      } 
+           
+      if($_SERVER['REQUEST_METHOD'] =='POST'){
+        $request->validate([
+            'image' => 'required',
+            'type' => 'required',
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
+        $image = $request->file('image');
+        $blog = Blog::create([
+            'type' => $request->type,
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $image->getFilename().'.'.$image->getClientOriginalExtension(),
+            'user_id' => $userId,
+        ]);
+      
+        $FileSystem = new Filesystem();
+        $directory_images = public_path().'/blog_images/'.$blog->id.'/';
+        
+        if(in_array($image->getClientOriginalExtension(),array('png','jpg','jpeg'))){
+            $image->move($directory_images,$image->getFilename().'.'.$image->getClientOriginalExtension());
+            
+        }else{
+            $request->session()->flash('image_error', 'Upload the right image format');
+            return redirect()->route('post');
+        }
+
+
+        return redirect()->route('post')->with('successMessage', 'Blog post created successfully.');
+      }else{
+
+
+        return view('pages.skydash-admin.blog-post',['date'=>$date,'profile'=>$profile,'email'=> $email,'userId'=>$userId, 'usersCount'=>$usersCount, 'title'=>' New Blog Post']);
+      }
+
+    }
+
+
+  //List all blog post
+  public function posts(){
+
+    $userId = Auth::user()->id;
+    $email = Auth::user()->email;
+    $usersCount= User::where("check", "new")->get()->count();
+    $date = date('Y');
+    if(Profile::where("user_id",$userId)->exists()){
+      $profile = Profile::where("user_id",$userId)->first();
+
+    }else{
+      $profile= new Profile;
+    }
+    $blogs = Blog::where(['user_id'=>$userId])->paginate(10);
+
+    return view('pages.skydash-admin.list-blog-post',['date'=>$date,'profile'=>$profile,'blogs'=>$blogs,'email'=> $email,'userId'=>$userId, 'usersCount'=>$usersCount, 'title'=>'List Blog Post']);
+
+  }
+
+  //edit blog post
+  public function editBlogPost($id){
+
+    $userId = Auth::user()->id;
+    $email = Auth::user()->email;
+    $usersCount= User::where("check", "new")->get()->count();
+    $date = date('Y');
+    if(Profile::where("user_id",$userId)->exists()){
+      $profile = Profile::where("user_id",$userId)->first();
+
+    }else{
+      $profile= new Profile;
+    }
+
+    if(Blog::where(["id"=>protectData($id)])->exists()){
+      $blog = Blog::where(["id"=>protectData($id)])->first();
+    }else{
+      $request->session()->flash('message', 'You are not allowed to edit this blog POST');                               
+      return redirect()->route('404');    
+    } 
+
+    return view('pages.skydash-admin.edit-blog-post',['date'=>$date,'profile'=> $profile, 'email'=>$email, 'usersCount' =>$usersCount, 'userId'=>$userId, 'blog'=>$blog, 'title'=>'Edit Blog Post']);
+
+  }  
+
+  //update blog post
+  public function updateBlogPost(Request $request){
+            
+    if($request->id == null || $request->id == '' || !is_numeric($request->id)){
+      $request->session()->flash('message', 'You are not allowed to update this blog');
+      return redirect()->route('404'); 
+    }
+    if( Blog::where(['id'=>protectData($request->id)])->exists()){
+      $image = $request->file('image');
+      $title = $request->input('title');
+      $type = $request->input('type');
+      $description = $request->input('description');
+        $rules=array(
+          'type' => 'required',
+          'title' => 'required',
+          'description' => 'required'
+        );
+        $validator= Validator::make($request->all(),$rules);
+        if($validator->fails()){
+           return redirect()->route('edit-blog-post',['id' => $request->id])->withErrors($validator);
+        }else{  
+
+        $blog = Blog::find(protectData($request->id));
+
+                     
+        $FileSystem = new Filesystem();
+        $directory = public_path().'/blog_images/';
+        if($image ==NULL || $image =='' ){
+          
+          if($blog->image !=Null || $blog->image !='' ){
+            
+          }else{
+            $blog->image = $image->getFilename().'.'.$image->getClientOriginalExtension();  
+          }
+        
+        }elseif($image->getFilename().'.'.$image->getClientOriginalExtension() != $blog->image){
+          if(file_exists($directory.$blog->id.'/'.$image->getFilename().'.'.$image->getClientOriginalExtension())){
+            unlink($directory.$blog->id.'/'.$blog->image);                                
+            $image->move($directory.$blog->id,$image->getFilename().'.'.$image->getClientOriginalExtension());
+            $blog->image=$image->getFilename().'.'.$image->getClientOriginalExtension();                                          
+          }else{
+
+            unlink($directory.$blog->id.'/'.$blog->image);                                
+            $image->move($directory.$blog->id,$image->getFilename().'.'.$image->getClientOriginalExtension());
+            $blog->image=$image->getFilename().'.'.$image->getClientOriginalExtension();   
+          }
+                              
+        }
+                                     
+        $blog->type= protectData($type);
+        $blog->title= protectData($title);
+        $blog->description= protectData($description);            
+        
+        if($blog->save()){
+          $request->session()->flash('successMessage', 'Blog post is successfully updated');                                                           
+        }else{
+          $request->session()->flash('errorMessage', 'Blog post is not successfully updated');                       
+        }
+        return back()->with($request->id);  
+      }                         
+    }else{
+      $request->session()->flash('errorMessage', 'You are not allowed to update this blog post');
+      return back()->with($request->id); 
+    }
+            
+  }
+
+    // delete blog post here
+  public function deleteBlogPost($id){
+ 
+    if($id == null || $id == '' || is_nan($id)){
+      return response()->json(['success'=>'fail','message'=>'You are not allowed to delete this blog post']);                   
+    }
+    
+    if(Blog::where("id",protectData($id))->exists()){
+
+      //soft delete
+      if(Blog::where("id",$id)->update(['status' => 'delete'])){
+        return response()->json(['success'=>'success','message'=>'blog with an '.$id.' has been deleted successfully']);
+      }                 
+    }else{
+      return response()->json(['success'=>'danger','message'=> 'No current blog record']);                                   
+    } 
+
+  }
 
     //admin login
     public function login(){
 
-      return view('pages.skydash-admin.login');
+      return view('pages.skydash-admin.login', ['title'=>'Login']);
 
     }
 
@@ -544,7 +728,7 @@ class AdminController extends Controller
 
   }
 
-    //tracking page to post update property detail
+    //post update property detail
   public function updateProperty(Request $request){
             
     if($request->id == null || $request->id == '' || !is_numeric($request->id)){

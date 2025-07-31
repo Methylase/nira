@@ -104,7 +104,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
-       document.getElementById('logout-form').submit()">
+                  document.getElementById('logout-form').submit()">
                 <i class="ti-power-off text-success"></i>
                 Logout
               </a>
@@ -321,80 +321,6 @@
           @can('is_agent')
 
           @endcan   
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="icon-columns menu-icon"></i>
-              <span class="menu-title">Form elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="{{asset('skydash-admin/template/pages/forms/basic_elements.html')}}">Basic Elements</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-              <i class="icon-bar-graph menu-icon"></i>
-              <span class="menu-title">Charts</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{asset('skydash-admin/template/pages/charts/chartjs.html')}}">ChartJs</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-              <i class="icon-grid-2 menu-icon"></i>
-              <span class="menu-title">Tables</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="tables">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{asset('skydash-admin/template/pages/tables/basic-table.html')}}">Basic table</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="icon-contract menu-icon"></i>
-              <span class="menu-title">Icons</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="icons">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{asset('skydash-admin/template/pages/icons/mdi.html')}}">Mdi icons</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="icon-head menu-icon"></i>
-              <span class="menu-title">User Pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{route('login')}}"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{route('signup')}}"> Register </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-              <i class="icon-ban menu-icon"></i>
-              <span class="menu-title">Error pages</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{asset('skydash-admin/template/pages/samples/error-404.html')}}"> 404 </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{asset('skydash-admin/template/pages/samples/error-500.html')}}"> 500 </a></li>
-              </ul>
-            </div>
-          </li>
           @if(Auth::user()->hasRole('ROLE_ADMIN'))
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#settings" aria-expanded="false" aria-controls="ui-basic">
@@ -427,7 +353,7 @@
         <footer class="footer">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
             <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © {{$date}}<a href="/" target="_blank"> Nira Properties</a> All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Designed by codeden</span>
           </div>
         </footer>
         <!-- partial -->
@@ -496,7 +422,7 @@
     });
 
         // grant user access
-        $('.grant-access').on('click', function(){
+        $('.grant-access').on('click',function(){
   
           $('.user-group').empty();
           $('.user-type-group').empty();
@@ -531,7 +457,6 @@
 
        $('.deleteProperty').on('click', function(){
           var delProperty = $(this).attr('id');
-          alert(delProperty);
           delProperty = delProperty.split(' ');
           $('.del_property').attr('id', 'del_property'+delProperty[1])
           $('#del_property'+delProperty[1]).on('click', function(){
@@ -561,7 +486,43 @@
             }
           });
           });
-        });      
+        });
+        
+        
+
+       $('.deleteBlog').on('click', function(){
+          var delBlog = $(this).attr('id');
+          delBlog = delBlog.split(' ');
+          $('.del_blog').attr('id', 'del_blog'+delBlog[1])
+          $('#del_blog'+delBlog[1]).on('click', function(){
+          var token =$("meta[name='csrf-token']").attr("content");
+          values= {
+            "BlogId": delBlog[1],
+            "_token": token,
+          }
+
+          // delete staff
+          $.ajax({
+              type: "DELETE",
+              url: "/delete-blog-post/"+delBlog[1],
+              data: values,
+          }).done(function(result){
+            if (result.success=='success'){
+              $('#confirm-delete').modal('hide');
+              $("#blog-body").prepend("<div class='status alert alert-success text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>"); 
+              setTimeout(function(){
+              location.reload();
+              }, 6000);
+            }else if(result.success=='fail'){
+                $("#blog-body").prepend("<div class='status alert alert-danger text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>");
+              setTimeout(function(){
+              location.reload();
+              }, 6000);                  
+            }
+          });
+          });
+        });   
+                
 
     /*  tinymce.init({
       selector: 'textarea#description',

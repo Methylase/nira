@@ -13909,6 +13909,7 @@ input[type="button"].btn-block {
 .nav{
  min-height: 100% !important; 
  max-height: 100vh !important;
+ 
 }
 
 .logout-item{
@@ -28490,7 +28491,8 @@ div.tagsinput span.tag a {
 
 /* Sidebar */
 .sidebar {
-  min-height: calc(100vh - 60px);
+  min-height: 1200px; /*calc(100vh - 60px)*/;
+  max-height: 1500px;
   background: #fff;
   font-family: "Nunito", sans-serif;
   font-weight: 500;
@@ -28686,7 +28688,7 @@ div.tagsinput span.tag a {
   position: absolute;
   margin-top: 16px;
   border-radius: 50%;
-  background: #b2b2b2;
+  /*background: #b2b2b2;*/
 }
 
 .sidebar .nav.sub-menu .nav-item .nav-link {

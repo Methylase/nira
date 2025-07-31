@@ -18,6 +18,8 @@ Route::get('/', 'EstateController@index');
 Route::get('/about', 'EstateController@about');
 Route::get('/blogs', 'EstateController@blogs');
 Route::get('/blog/{name?}', 'EstateController@blog')->name('blog');
+Route::post('/blogs/{blog}/comments', 'EstateController@comments')->name('comments');
+Route::post('/comments/{comment}/reply', 'EstateController@reply')->name('reply');
 Route::get('/properties', 'EstateController@properties');
 Route::post('/properties', 'EstateController@properties')->name('properties');
 Route::get('/property/{id}', 'EstateController@property')->name('property')->where('id','.*');
@@ -28,6 +30,8 @@ Route::post('/contact', 'EstateController@contact');
 Route::get('/testimony', 'EstateController@testimony')->name('testimony');
 Route::post('/testimony', 'EstateController@testimony');
 Route::post('/contact_agent', 'EstateController@contact_agent');
+ Route::post('/comments', 'EstateController@comments')->name('comments');
+
 
 Route::group(['middleware'=>'guest'], function(){
     Route::get('/login', 'AdminController@login')->name('login');
@@ -58,11 +62,14 @@ Route::group(['middleware'=>['auth','preventBackHistory']],function(){
     Route::delete('/delete-property/{id}', 'AdminController@deleteProperty')->name('delete-property');
 
     Route::group(['middleware'=>['role:ROLE_ADMIN']],function(){
-        Route::get('/post', 'AdminController@setupProfile')->name('post');
-        Route::post('/post', 'AdminController@setupProfile');
-        Route::get('/posts', 'AdminController@setupProfile')->name('posts');
+        Route::get('/post', 'AdminController@blogPost')->name('post');
+        Route::post('/post', 'AdminController@blogPost');
+        Route::get('/posts', 'AdminController@posts')->name('posts');
         Route::get('/settings', 'AdminController@settings')->name('settings');
         Route::post('/grant_access', 'AdminController@grant_access')->name('grant_access');
+        Route::get('/edit-blog-post/{id}', 'AdminController@editBlogPost')->name('edit-blog-post')->where('id','.*');
+        Route::put('/update-blog-post', 'AdminController@updateBlogPost');
+        Route::delete('/delete-blog-post/{id}', 'AdminController@deleteBlogPost')->name('delete-blog-post');
  
     });
 

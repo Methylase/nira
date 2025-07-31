@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>Nira {{$title}}</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/feather/feather.css')}}">
   <link rel="stylesheet" href="{{asset('skydash-admin/template/vendors/ti-icons/css/themify-icons.css')}}">
@@ -16,7 +16,8 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="{{asset('skydash-admin/template/css/vertical-layout-light/style.css')}}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{asset('skydash-admin/template/images/favicon.png')}}" />
+  <link rel="shortcut icon" href="{{asset('images/favicon.ico')}}" />
+  <link href="{{asset('images/favicon.ico')}}" rel="apple-touch-icon">
 </head>
 
 <body>

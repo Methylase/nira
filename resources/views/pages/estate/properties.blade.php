@@ -36,11 +36,33 @@
                     <div class="grid-option">
                         <form id="form" action="/properties" method="POST" onchange="onSelectChange()">
                             {{csrf_field()}}
-                            <select class="custom-select form-control" name="property_type" >
-                            <option selected>All</option>
-                            <option value="1">New to Old</option>
-                            <option value="2">For Rent</option>
-                            <option value="3">For Sale</option>
+                            <select class="custom-select form-control"  name="property_type" >
+                                <?php if(!isset($property_type)): ?>
+                                    <option selected value="all">All</option>
+                                    <option value="1">New to Old</option>
+                                    <option value="2">For Rent</option>
+                                    <option value="3">For Sale</option>
+                                <?php elseif(isset($property_type) && $property_type =='all'): ?>
+                                    <option selected value="all">All</option>
+                                    <option value="1">New to Old</option>
+                                    <option value="2">For Rent</option>
+                                    <option value="3">For Sale</option>                                    
+                                <?php elseif(isset($property_type) && $property_type =='1'): ?>
+                                    <option value="all">All</option>
+                                    <option selected value="1">New to Old</option>
+                                    <option value="2">For Rent</option>
+                                    <option value="3">For Sale</option>
+                                <?php elseif(isset($property_type) && $property_type =='2'): ?>
+                                    <option value="all">All</option>
+                                    <option value="1">New to Old</option>
+                                    <option selected value="2">For Rent</option>
+                                    <option value="3">For Sale</option>  
+                                <?php elseif(isset($property_type) && $property_type =='3'): ?>
+                                    <option value="all">All</option>
+                                    <option value="1">New to Old</option>
+                                    <option value="2">For Rent</option>
+                                    <option selected value="3">For Sale</option>                                                                      
+                                <?php endif ?>
                             </select>
                         </form>
                     </div>
