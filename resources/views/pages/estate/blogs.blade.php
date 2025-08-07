@@ -16,7 +16,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                    <a href="index.html">Home</a>
+                    <a href="{{route('home')}}">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                     News Grid
@@ -41,11 +41,11 @@
                         <div class="card-overlay">
                             <div class="card-header-b">
                             <div class="card-category-b">
-                                <a href="#" class="category-b">{{$blog->type}}</a>
+                                <a href="/blog?id={{$blog->id}}" class="category-b">{{$blog->type}}</a>
                             </div>
                             <div class="card-title-b">
                                 <h2 class="title-2">
-                                <a href="/blog?id=<?= $blog->id ?>"> {{$blog->title}}
+                                <a href="/blog?id={{$blog->id}}"> {{$blog->title}}
                                     <br> {{($blog->updated_at != NULL ?  'old' : 'new')}}</a>
                                 </h2>
                             </div>
@@ -62,7 +62,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <?= $blogs->links()?>
+                   {{$blogs->links()}}
                 </div>
             </div>
         </div>

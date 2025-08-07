@@ -9,14 +9,18 @@
                 <div class="col-md-12 col-lg-8">
                     <div class="title-single-box">
                     <h1 class="title-single">Testimony</h1>
-                    <span class="color-text-a">Aut voluptas consequatur unde sed omnis ex placeat quis eos. Aut natus officia corrupti qui autem fugit consectetur quo. Et ipsum eveniet laboriosam voluptas beatae possimus qui ducimus. Et voluptatem deleniti. Voluptatum voluptatibus amet. Et esse sed omnis inventore hic culpa.</span>
+                    <span class="color-text-a">We’d love to hear about your experience with our real estate platform!
+Your feedback helps others find their dream home or sell with confidence.
+Whether you bought, sold, or just explored, every story matters.
+Share your journey and let your voice guide future homeowners.
+Leave a quick testimony and help us grow a trusted community!</span>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-4">
                     <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
+                            <a href="{{route('home')}}">Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                             Testimony

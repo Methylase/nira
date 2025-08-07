@@ -32,34 +32,36 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php $i= 1;?>
+                                                            <?php $i = 1 ?>
                                                             @foreach ($properties as $property )
                                                             <tr>
                     
-                                                                <td class="pl-0 pb-0"><?= $i ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->type ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->area ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->bed ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->baths ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->garage ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->amount ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->postalCode ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->address ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->state ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $property->localG ?> </td>
+                                                                <td class="pl-0 pb-0">{{$i}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->type}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->area}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->bed}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->baths}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->garage}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->amount}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->postalCode}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->address}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->state}}</td>
+                                                                <td class="pl-0 pb-0">{{$property->localG}}</td>
                                                                 <td class="pl-0 pb-0"> 
-                                                                    <?php if(isset($property->status) && $property->status =='rent'): ?>
-                                                                        <span  class="bg-warning rounded p-2"><?= ucfirst($property->status) ?></a> 
-                                                                    <?php elseif(isset($property->status) && $property->status =='sale'): ?>
-                                                                        <span class="bg-danger rounded p-2"><?= ucfirst($property->status) ?></a>
-                                                                    <?php endif ?>
+                                                                    @if(isset($property->status) && $property->status =='rent')
+                                                                        <span  class="bg-warning rounded p-2">{{ucfirst($property->status)}}</a> 
+                                                                    @elseif(isset($property->status) && $property->status =='sale')
+                                                                        <span class="bg-danger rounded p-2">{{ucfirst($property->status)}}</a>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <a href="/edit-property/{{$property->id}}" class="btn" title="Edit"><span class="fa fa-edit h3"></span></a>                                         
+                                                                    @can('delete', $property)  
                                                                     <a href="" class="btn deleteProperty"  id='del {{$property->id}}' data-title="Delete" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash h3" title="Delete"></span></a>
+                                                                    @endcan
                                                                 </td>
                                                             </tr>
-                                                            <?php $i++;?>
+                                                            <?php $i++ ?>
                                                             @endforeach
                                                         </tbody>                 
                                                     </table>

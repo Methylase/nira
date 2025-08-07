@@ -16,9 +16,9 @@
                                         <label>Select User</label>
                                         <select name="user" id="user" class="form-control">
                                             <option value="">Select-User</option>
-                                            <?php foreach($users as $user){?>
-                                                <option value="<?= $user->id ?>"><?= ucwords($user->email) ?></option>
-                                            <?php }?>
+                                            @foreach($users as $user)
+                                                <option value="{{$user->id}}">{{ucwords($user->email)}}</option>
+                                            @endforeach
                                         </select>
                                         <span class="user-group text-danger"></span>
                                     </div>
@@ -69,24 +69,24 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php $i= 1;?>
+                                                            {{$i= 1}}
                                                             @foreach ($registeredUsers as $registeredUser )
                                                             <tr>
-                                                                <td class="pl-0 pb-0"><?= $i ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $registeredUser->name ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $registeredUser->email ?> </td>
+                                                                <td class="pl-0 pb-0">{{$i}}</td>
+                                                                <td class="pl-0 pb-0">{{$registeredUser->name}}</td>
+                                                                <td class="pl-0 pb-0">{{$registeredUser->email}}</td>
                                                                 <td> 
-                                                                    <?php if(isset($registeredUser->check) && $registeredUser->check =='approved'): ?>
-                                                                        <span class="badge badge-warning py-2"><?= ucfirst($registeredUser->check) ?></span> 
-                                                                    <?php elseif(isset($registeredUser->check) && $registeredUser->check =='locked'): ?>
-                                                                    <span class="badge badge-danger py-2"><?= ucfirst($registeredUser->check) ?></span>
+                                                                    @if(isset($registeredUser->check) && $registeredUser->check =='approved')
+                                                                        <span class="badge badge-warning py-2">{{ucfirst($registeredUser->check)}}</span> 
+                                                                    @elseif(isset($registeredUser->check) && $registeredUser->check =='locked')
+                                                                    <span class="badge badge-danger py-2">{{ucfirst($registeredUser->check)}}</span>
                                                                                                                                      
-                                                                    <?php else: ?>
+                                                                    @else
                                                                         <span class="badge badge-danger py-2">waiting</span>
-                                                                    <?php endif ?>
+                                                                    @endif
                                                                 </td>
                                                             </tr>
-                                                            <?php $i++;?>
+                                                            {{$i++}}
                                                             @endforeach
                                                         </tbody>                 
                                                     </table>

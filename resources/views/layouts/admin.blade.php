@@ -103,7 +103,11 @@
               <img src="{{isset($profile->profile_image) && $profile->profile_image !=='' ? url('uploads/'.$profile->id.'/'.$profile->profile_image) : asset('images/user.jpg') }}" alt="profile image"/>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item" href="/logout" onclick="event.preventDefault();
+              <a class="dropdown-item" href="{{route('setup-profile')}}">
+                <i class="fa fa-user-o text-success"></i>
+                Edit Profile
+              </a>
+              <a class="dropdown-item" href="{{route('logout')}}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit()">
                 <i class="ti-power-off text-success"></i>
                 Logout
@@ -291,19 +295,23 @@
               </ul>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#blogs" aria-expanded="false" aria-controls="ui-basic">
-              <i class="icon-layout menu-icon"></i>
-              <span class="menu-title">Blogs</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="blogs">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{route('post')}}">Post Blog</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{route('posts')}}">Blog Posts</a></li>
-              </ul>
-            </div>
-          </li>
+
+          @can('is_admin')
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#blogs" aria-expanded="false" aria-controls="ui-basic">
+                <i class="icon-layout menu-icon"></i>
+                <span class="menu-title">Blogs</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="blogs">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="{{route('post')}}">Post Blog</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('posts')}}">Blog Posts</a></li>
+                </ul>
+              </div>
+            </li>
+          @endcan 
+          
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#profile" aria-expanded="false" aria-controls="profile">
               <i class="icon-head menu-icon"></i>
@@ -318,9 +326,7 @@
             </div>
           </li>
 
-          @can('is_agent')
 
-          @endcan   
           @if(Auth::user()->hasRole('ROLE_ADMIN'))
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#settings" aria-expanded="false" aria-controls="ui-basic">
@@ -336,7 +342,7 @@
           </li>
           @endif
           <li class="nav-item logout-item">
-            <a class="nav-link" href="/logout" onclick="event.preventDefault();
+            <a class="nav-link" href="{{route('logout')}}" onclick="event.preventDefault();
        document.getElementById('logout-form').submit()">
               <i class="ti-power-off menu-icon"></i>
               <span class="menu-title">Logout</span>

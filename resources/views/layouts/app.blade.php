@@ -131,25 +131,25 @@
         <span></span>
         <span></span>
       </button>
-      <a class="navbar-brand text-brand" href="/">Nira<span class="color-b"> Properties</span></a>
+      <a class="navbar-brand text-brand" href="{{route('home')}}">Nira<span class="color-b"> Properties</span></a>
 
       <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('/')) ? 'active': ''}}" href="/">Home</a>
+            <a class="nav-link  {{(request()->is('/')) ? 'active': ''}}" href="{{route('home')}}">Home</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link {{ (request()->is('about')) ? 'active': ''}}" href="/about">About</a>
+            <a class="nav-link {{ (request()->is('about')) ? 'active': ''}}" href="{{route('about')}}">About</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('properties')) ? 'active': ''}}" href="/properties">Properties</a>
+            <a class="nav-link  {{(request()->is('properties')) ? 'active': ''}}" href="{{route('properties')}}">Properties</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('blogs')) ? 'active': ''}}" href="/blogs">Blogs</a>
+            <a class="nav-link  {{(request()->is('blogs')) ? 'active': ''}}" href="{{route('blogs')}}">Blogs</a>
           </li>
           <!--<li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
@@ -197,7 +197,7 @@
                               <br><?= substr($carouselProperty->address, 4) ?>
                             </h1>
                             <p class="intro-subtitle intro-price">
-                              <a href="#"><span class="price-a"><?= $carouselProperty->type ?> | &#8358;<?= number_format($carouselProperty->amount,2) ?></span></a>
+                              <a href="{{route('property', $carouselProperty->id)}}"><span class="price-a"><?= $carouselProperty->type ?> | &#8358;<?= number_format($carouselProperty->amount,2) ?></span></a>
                             </p>
                           </div>
                         </div>
@@ -249,13 +249,13 @@
               <div class="w-body-a">
                 <ul class="list-unstyled">
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="/about">About Us</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{route('about')}}">About Us</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="/properties">Properties</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{route('properties')}}">Properties</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="/contact">Contact</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{route('contact')}}">Contact</a>
                   </li>
                 </ul>
               </div>
@@ -271,13 +271,13 @@
               
               <ul class="list-unstyled">
                 <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="/blogs">Blogs</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{route('blogs')}}">Blogs</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="/testimony">Testimony</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{route('testimony')}}">Testimony</a>
                   </li>
                   <li class="item-list-a">
-                    <i class="bi bi-chevron-right"></i> <a href="/private-policy">Privacy Policy</a>
+                    <i class="bi bi-chevron-right"></i> <a href="{{route('privacy-policy')}}">Privacy Policy</a>
                   </li>
               </ul>
             </div>
@@ -321,7 +321,7 @@
             </p>
           </div>
           <div class="credits">
-            Designed by <a href="/">Codeden</a>
+            Designed by <a href="{{route('home')}}">Codeden</a>
           </div>
         </div>
       </div>

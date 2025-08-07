@@ -28,8 +28,4 @@ class Property extends Model
    ];   
   protected $table='properties';
    
-    function user() {
-     return $this->belongsTo('App\User');
-
-    }
 }

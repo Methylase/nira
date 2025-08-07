@@ -55,6 +55,13 @@ class AdminController extends Controller
       $userId = Auth::user()->id;
       $email = Auth::user()->email;
       $usersCount= User::where("check", "new")->get()->count();
+      $usersRegCount= User::get()->skip(1)->count();
+      $blogCount= Blog::get()->count();
+      $rentCount= Property::where("status", "rent")->get()->count();
+      $salesCount= Property::where("status", "sale")->get()->count();
+      $newUsers= User::with('profile')->where("check", "new")->get()->skip(1);
+      $agents = User::inRandomOrder()->with('profile')->get()->skip(1);
+      $properties = Property::inRandomOrder()->where(['user_id'=>$userId])->orderBy('id')->paginate(10);
       $date = date('Y');
       if(Profile::where("user_id",$userId)->exists()){
         $profile = Profile::where("user_id",$userId)->first();
@@ -63,7 +70,12 @@ class AdminController extends Controller
         $profile= new Profile;
       }
 
-      return view('pages.skydash-admin.index',['date'=>$date,'profile'=>$profile,'email'=> $email,'userId'=>$userId, 'usersCount'=>$usersCount, 'title'=>'Dashboard']);
+      return view('pages.skydash-admin.index',[
+                    'date'=>$date,'profile'=>$profile,'email'=> $email,'userId'=>$userId,
+                    'usersCount'=>$usersCount, 'usersRegCount' => $usersRegCount, 'blogCount' => $blogCount, 'rentCount' => $rentCount,
+                    'salesCount' => $salesCount, 'newUsers' => $newUsers, 'agents' => $agents,
+                    'properties' => $properties, 'title'=>'Dashboard'
+                  ]);
 
     }
     
@@ -140,8 +152,8 @@ class AdminController extends Controller
   }
 
   //edit blog post
-  public function editBlogPost($id){
-
+  public function editBlogPost(Blog $blog){
+    $this->authorize('update', $blog);
     $userId = Auth::user()->id;
     $email = Auth::user()->email;
     $usersCount= User::where("check", "new")->get()->count();
@@ -152,13 +164,8 @@ class AdminController extends Controller
     }else{
       $profile= new Profile;
     }
-
-    if(Blog::where(["id"=>protectData($id)])->exists()){
-      $blog = Blog::where(["id"=>protectData($id)])->first();
-    }else{
-      $request->session()->flash('message', 'You are not allowed to edit this blog POST');                               
-      return redirect()->route('404');    
-    } 
+    
+    $blog = Blog::where(["id"=>protectData($blog->id)])->first(); 
 
     return view('pages.skydash-admin.edit-blog-post',['date'=>$date,'profile'=> $profile, 'email'=>$email, 'usersCount' =>$usersCount, 'userId'=>$userId, 'blog'=>$blog, 'title'=>'Edit Blog Post']);
 
@@ -171,6 +178,7 @@ class AdminController extends Controller
       $request->session()->flash('message', 'You are not allowed to update this blog');
       return redirect()->route('404'); 
     }
+
     if( Blog::where(['id'=>protectData($request->id)])->exists()){
       $image = $request->file('image');
       $title = $request->input('title');
@@ -183,7 +191,7 @@ class AdminController extends Controller
         );
         $validator= Validator::make($request->all(),$rules);
         if($validator->fails()){
-           return redirect()->route('edit-blog-post',['id' => $request->id])->withErrors($validator);
+           return redirect()->route('edit-blog-post',['blog' => $request->id])->withErrors($validator);
         }else{  
 
         $blog = Blog::find(protectData($request->id));
@@ -232,22 +240,9 @@ class AdminController extends Controller
   }
 
     // delete blog post here
-  public function deleteBlogPost($id){
- 
-    if($id == null || $id == '' || is_nan($id)){
-      return response()->json(['success'=>'fail','message'=>'You are not allowed to delete this blog post']);                   
-    }
-    
-    if(Blog::where("id",protectData($id))->exists()){
-
-      //soft delete
-      if(Blog::where("id",$id)->update(['status' => 'delete'])){
-        return response()->json(['success'=>'success','message'=>'blog with an '.$id.' has been deleted successfully']);
-      }                 
-    }else{
-      return response()->json(['success'=>'danger','message'=> 'No current blog record']);                                   
-    } 
-
+  public function deleteBlogPost(Blog $blog){
+    $this->authorize('delete', $blog);
+    return response()->json(['success'=>'success','message'=>'blog with an '.$blog->id.' has been deleted successfully']);
   }
 
     //admin login
@@ -306,7 +301,7 @@ class AdminController extends Controller
 
 
     //admin signup
-    public function signup(){
+    public function signup(Request $request){
 
       if($_SERVER['REQUEST_METHOD'] =='POST'){
 
@@ -356,7 +351,7 @@ class AdminController extends Controller
         }
 
       }else{
-          return view('pages.skydash-admin.signup');
+          return view('pages.skydash-admin.signup',['title' =>'Signup']);
       }
 
     }
@@ -704,8 +699,9 @@ class AdminController extends Controller
 
 
 
-  public function editProperty($id){
+  public function editProperty(Property $property){
 
+    $this->authorize('update', $property);
     $userId = Auth::user()->id;
     $email = Auth::user()->email;
     $usersCount= User::where("check", "new")->get()->count();
@@ -717,12 +713,8 @@ class AdminController extends Controller
       $profile= new Profile;
     }
 
-    if(Property::where(["id"=>protectData($id)])->exists()){
-      $property = Property::where(["id"=>protectData($id)])->first();
-    }else{
-      $request->session()->flash('message', 'You are not allowed to edit this property');                               
-      return redirect()->route('404');    
-    } 
+
+    $property = Property::where(["id"=>protectData($property->id)])->first();
 
     return view('pages.skydash-admin.edit-property',['date'=>$date,'profile'=> $profile, 'email'=>$email, 'usersCount' =>$usersCount, 'userId'=>$userId, 'property'=>$property, 'title'=>'Edit Property']);
 
@@ -771,7 +763,7 @@ class AdminController extends Controller
         );
         $validator= Validator::make($request->all(),$rules);
         if($validator->fails()){
-           return redirect()->route('edit-property',['id' => $request->id])->withErrors($validator);
+           return redirect()->route('edit-property',['property' => $request->id])->withErrors($validator);
         }else{  
 
         $property = Property::find(protectData($request->id));
@@ -876,21 +868,10 @@ class AdminController extends Controller
 
 
   // delete property here
-  public function deleteProperty($id){
- 
-    if($id == null || $id == '' || is_nan($id)){
-      return response()->json(['success'=>'fail','message'=>'You are not allowed to delete this property']);                   
-    }
-    
-    if(Property::where("id",protectData($id))->exists()){
+  public function deleteProperty(Property $property){
+    $this->authorize('delete', $property);
 
-      //soft delete
-      if(Property::where("id",$id)->update(['delete_status' => 'delete'])){
-        return response()->json(['success'=>'success','message'=>'property with an '.$id.' has been deleted successfully']);
-      }                 
-    }else{
-      return response()->json(['success'=>'danger','message'=> 'No current property record']);                                   
-    } 
+        return response()->json(['success'=>'success','message'=>'property with an '.$property->id.' has been deleted successfully']);
 
   }
 

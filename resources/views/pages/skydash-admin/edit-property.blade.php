@@ -90,7 +90,7 @@
                                     <label class="col-sm-3 col-form-label">Property Status</label>
                                     <div class="col-sm-9">
                                         <select name="status" class="form-control">
-                                            @if(  $property->status ==="none" || $property->status ===NULL)
+                                            @if(  $property->status ==="" || $property->status ===NULL)
                                                 <option value="">Select property status</option>
                                                 <option value="rent">Rent</option>
                                                 <option value="sale">Sale</option>
@@ -105,10 +105,10 @@
                                             @elseif($property->status ==="sale")
                                                 <option value="">Select property status</option>
                                                 <option value="rent">Rent</option>
-                                                <option value="{{$property->status ==='rent'? $property->status :old('maritalStatus', $property->status) }}" selected>{{ucfirst($property->status)}}</option>
+                                                <option value="{{$property->status ==='sale'? $property->status :old('maritalStatus', $property->status) }}" selected>{{ucfirst($property->status)}}</option>
                                                 <option value="loan">Loan</option>       
 
-                                            @elseif($property->status ==="single")
+                                            @elseif($property->status ==="loan")
                                                 <option value="">Select property status</option>
                                                 <option value="rent">Rent</option>
                                                 <option value="loan">Loan</option>  
@@ -145,7 +145,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Number of bed</label>
+                                    <label class="col-sm-3 col-form-label">Number of bed(s)/office(s)</label>
                                     <div class="col-sm-9">
                                         <select name="bed" class="form-control form-control-lg" >
 
@@ -424,12 +424,7 @@
                                     <label class="col-sm-3 col-form-label">Property Type</label>
                                     <div class="col-sm-9">
                                         <select name="type" class="form-control">
-                                            <option value="">Select property type</option>
-                                            <option value="house">House</option>
-                                            <option value="office space">Office Space</option>
-                                            <option value="warehouse">Warehouse</option>
-
-                                            @if(  $property->type ==="none" || $property->type ===NULL)
+                                            @if(  $property->type ==="" || $property->type ===NULL)
                                                 <option value="">Select property type</option>
                                                 <option value="house">House</option>
                                                 <option value="office space">Office Space</option>
@@ -441,13 +436,13 @@
                                                 <option value="office space">Office Space</option>
                                                 <option value="warehouse">Warehouse</option>                               
                                                
-                                            @elseif($property->status ==="office space")
+                                            @elseif($property->type ==="office space")
                                                 <option value="">Select property type</option>
                                                 <option value="house">House</option>
-                                                <option value="{{$property->type ==='office space'? $property->type :old('type', $property->type) }}" selected>{{ucfirst($property->type)}}</option>
+                                                <option value="{{$property->type ==='office space' ? $property->type :old('type', $property->type) }}" selected>{{ucfirst($property->type)}}</option>
                                                 <option value="warehouse">Warehouse</option>   
 
-                                            @elseif($property->status ==="warehouse")
+                                            @elseif($property->type ==="warehouse")
                                                 <option value="">Select property type</option>
                                                 <option value="house">House</option>
                                                 <option value="office space">Office Space</option>

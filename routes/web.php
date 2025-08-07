@@ -14,24 +14,24 @@ use App\Services\CalculatorService;
 |
 */
 
-Route::get('/', 'EstateController@index');
-Route::get('/about', 'EstateController@about');
-Route::get('/blogs', 'EstateController@blogs');
-Route::get('/blog/{name?}', 'EstateController@blog')->name('blog');
-Route::post('/blogs/{blog}/comments', 'EstateController@comments')->name('comments');
+Route::get('/', 'EstateController@index')->name('home');
+Route::get('/about', 'EstateController@about')->name('about');
+Route::get('/blogs', 'EstateController@blogs')->name('blogs');
+Route::get('/blog/{id?}', 'EstateController@blog')->name('blog');
+Route::post('/blogs/{id}/comments', 'EstateController@comments');
 Route::post('/comments/{comment}/reply', 'EstateController@reply')->name('reply');
-Route::get('/properties', 'EstateController@properties');
-Route::post('/properties', 'EstateController@properties')->name('properties');
-Route::get('/property/{id}', 'EstateController@property')->name('property')->where('id','.*');
-Route::get('/agents', 'EstateController@agents');
-Route::get('/agent/{name?}', 'EstateController@agent')->name('agent');
+Route::get('/properties', 'EstateController@properties')->name('properties');
+Route::post('/properties', 'EstateController@properties');
+Route::get('/property/{id?}', 'EstateController@property')->name('property')->where('id','.*');
+Route::get('/agents', 'EstateController@agents')->name('agents');
+Route::get('/agent/{id?}', 'EstateController@agent')->name('agent');
 Route::get('/contact', 'EstateController@contact')->name('contact');
 Route::post('/contact', 'EstateController@contact');
 Route::get('/testimony', 'EstateController@testimony')->name('testimony');
 Route::post('/testimony', 'EstateController@testimony');
 Route::post('/contact_agent', 'EstateController@contact_agent');
- Route::post('/comments', 'EstateController@comments')->name('comments');
-
+Route::post('/comments', 'EstateController@comments')->name('comments');
+Route::get('/privacy-policy', 'EstateController@privacy')->name('privacy-policy');
 
 Route::group(['middleware'=>'guest'], function(){
     Route::get('/login', 'AdminController@login')->name('login');
@@ -56,7 +56,7 @@ Route::group(['middleware'=>['auth','preventBackHistory']],function(){
     Route::post('/reset-password', 'AdminController@resetPassword');
     Route::get('/add-property', 'AdminController@addProperty')->name('add-property');
     Route::post('/add-property', 'AdminController@addProperty');
-    Route::get('/edit-property/{id}', 'AdminController@editProperty')->name('edit-property')->where('id','.*');
+    Route::get('/edit-property/{property}', 'AdminController@editProperty')->name('edit-property')->where('blog','.*');
     Route::put('/update-property', 'AdminController@updateProperty');
     Route::get('/list-properties', 'AdminController@listProperties')->name('list-properties');
     Route::delete('/delete-property/{id}', 'AdminController@deleteProperty')->name('delete-property');
@@ -67,7 +67,7 @@ Route::group(['middleware'=>['auth','preventBackHistory']],function(){
         Route::get('/posts', 'AdminController@posts')->name('posts');
         Route::get('/settings', 'AdminController@settings')->name('settings');
         Route::post('/grant_access', 'AdminController@grant_access')->name('grant_access');
-        Route::get('/edit-blog-post/{id}', 'AdminController@editBlogPost')->name('edit-blog-post')->where('id','.*');
+        Route::get('/edit-blog-post/{blog}', 'AdminController@editBlogPost')->name('edit-blog-post')->where('blog','.*');
         Route::put('/update-blog-post', 'AdminController@updateBlogPost');
         Route::delete('/delete-blog-post/{id}', 'AdminController@deleteBlogPost')->name('delete-blog-post');
  

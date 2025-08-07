@@ -15,7 +15,7 @@
             <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="#">Home</a>
+                  <a href="{{route('home')}}">Home</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                   About
@@ -100,21 +100,21 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Margaret Sotillo
-                        <br> Escala</a>
+                      <a href="agent-single.html" class="link-two">Gabriel Bayewu
+                        <br> Director Of Operation</a>
                     </h3>
                   </div>
                 </div>
                 <div class="card-body-d">
                   <p class="content-d color-text-a">
-                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                    Inspite of the challenges, I find myself, I always believe their is a way forward.
                   </p>
                   <div class="info-agents color-a">
                     <p>
-                      <strong>Phone: </strong> +54 356 945234
+                      <strong>Phone: </strong> +2348188373898
                     </p>
                     <p>
-                      <strong>Email: </strong> agents@example.com
+                      <strong>Email: </strong> gabriel.bayewu@niraproperties.com
                     </p>
                   </div>
                 </div>
@@ -156,21 +156,21 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Stiven Spilver
-                        <br> Darw</a>
+                      <a href="agent-single.html" class="link-two">Steven Faulawn
+                        <br> Head Of Marketing</a>
                     </h3>
                   </div>
                 </div>
                 <div class="card-body-d">
                   <p class="content-d color-text-a">
-                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                    One step farword is a step to success, I don't underestimate it.
                   </p>
                   <div class="info-agents color-a">
                     <p>
-                      <strong>Phone: </strong> +54 356 945234
+                      <strong>Phone: </strong> +2349036561101
                     </p>
                     <p>
-                      <strong>Email: </strong> agents@example.com
+                      <strong>Email: </strong> steven.faulawn@niraproperties.com
                     </p>
                   </div>
                 </div>
@@ -218,20 +218,20 @@
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
                       <a href="agent-single.html" class="link-two">Emma Toledo
-                        <br> Cascada</a>
+                        <br> Digital Strategist</a>
                     </h3>
                   </div>
                 </div>
                 <div class="card-body-d">
                   <p class="content-d color-text-a">
-                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                      Success is not served alakat, you have to be a gol getter.
                   </p>
                   <div class="info-agents color-a">
                     <p>
-                      <strong>Phone: </strong> +54 356 945234
+                      <strong>Phone: </strong> +2349135673529
                     </p>
                     <p>
-                      <strong>Email: </strong> agents@example.com
+                      <strong>Email: </strong> emma.toledo@niraproperties.com
                     </p>
                   </div>
                 </div>
@@ -278,21 +278,21 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Emma Toledo
-                        <br> Cascada</a>
+                      <a href="agent-single.html" class="link-two">Bryan Dawn
+                        <br> Graphics Designer</a>
                     </h3>
                   </div>
                 </div>
                 <div class="card-body-d">
                   <p class="content-d color-text-a">
-                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                    .
                   </p>
                   <div class="info-agents color-a">
                     <p>
-                      <strong>Phone: </strong> +54 356 945234
+                      <strong>Phone: </strong> +23407036280728
                     </p>
                     <p>
-                      <strong>Email: </strong> agents@example.com
+                      <strong>Email: </strong>bryan.dawn@niraproperties.com
                     </p>
                   </div>
                 </div>

@@ -8,21 +8,21 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-8">
                         <div class="title-single-box">
-                            <h1 class="title-single"><?= $property->address ?></h1>
-                            <span class="color-text-a"><?= $property->localG.', '.$property->state ?></span>
+                            <h1 class="title-single">{{$property->address}}</h1>
+                            <span class="color-text-a">{{$property->localG.', '.$property->state}}</span>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-4">
                         <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="index.html">Home</a>
+                                    <a href="{{route('home')}}">Home</a>
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="{{route('properties')}}">Properties</a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    <?= $property->address ?>
+                                    {{$property->address}}
                                 </li>
                             </ol>
                         </nav>
@@ -77,7 +77,7 @@
                                         <span class="bi bi-cash"> &#8358; </span>
                                         </div>
                                         <div class="card-title-c align-self-center">
-                                        <h5 class="title-c"><?= number_format($property->amount,2) ?></h5>
+                                        <h5 class="title-c">{{number_format($property->amount,2)}}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -94,33 +94,33 @@
 
                                             <li class="d-flex justify-content-between">
                                                 <strong>Location:</strong>
-                                                <span><?= $property->localG.', '.$property->state ?></span>
+                                                <span>{{$property->localG.', '.$property->state}}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Property Type:</strong>
-                                                <span><?= $property->type ?></span>
+                                                <span>{{$property->type}}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Status:</strong>
-                                                <span><?= $property->status ?></span>
+                                                <span>{{$property->status}}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Area:</strong>
                                                 <span>
-                                                    <?= $property->area ?><sup>2</sup>
+                                                    {{$property->area}}<sup>2</sup>
                                                 </span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Beds:</strong>
-                                                <span><?= $property->bed ?></span>
+                                                <span>{{$property->bed}}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Baths:</strong>
-                                                <span><?= $property->baths ?></span>
+                                                <span>{{$property->baths}}</span>
                                             </li>
                                             <li class="d-flex justify-content-between">
                                                 <strong>Garage:</strong>
-                                                <span><?= $property->garage ?></span>
+                                                <span>{{$property->garage}}</span>
                                             </li>
                                         </ul>
                                     </div>
@@ -130,12 +130,12 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="title-box-d">
-                                        <h3 class="title-d"><?= $property->description ?></h3>
+                                        <h3 class="title-d">{{$property->description}}</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="property-description">
-                                    <?= $property->description ?>
+                                    {{$property->description}}
                                 </div>
                                 <div class="row section-t3">
                                     <div class="col-sm-12">
@@ -190,22 +190,22 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
-                                <img src="{{asset('estate/img/agent-4.jpg')}}" alt="" class="img-fluid">
+                                <img src="{{asset('/uploads/'.$agent->profile->id.'/'.$agent->profile->profile_image)}}" alt="" class="img-fluid">
                             </div>
                             <div class="col-md-6 col-lg-4">
                                 <div class="property-agent">
-                                    <h4 class="title-agent">{{ (isset($agent) && $agent!=NULL) ? $agent->firstname.' '.$agent->lastname : '' }}</h4>
+                                    <h4 class="title-agent">{{ (isset($agent) && $agent!=NULL) ? $agent->profile->firstname.' '.$agent->profile->lastname : '' }}</h4>
                                     <p class="color-text-a">
-                                        {{ isset($agent) && $agent!=NULL ? $agent->description : ''}} 
+                                        {{ isset($agent) && $agent!=NULL ? $agent->profile->description : ''}} 
                                     </p>
                                     <ul class="list-unstyled">
                                         <li class="d-flex justify-content-between">
                                             <strong>Phone:</strong>
-                                            <span class="color-text-a">{{ (isset($agent) && $agent !=NULL) ? $agent->phone_number : ''}}</span>
+                                            <span class="color-text-a">{{ (isset($agent) && $agent !=NULL) ? $agent->profile->phone_number : ''}}</span>
                                         </li>
                                         <li class="d-flex justify-content-between">
                                             <strong>Email:</strong>
-                                            <span class="color-text-a">{{ (isset($email) && $email !=NULL) ? $email : ''}}</span>
+                                            <span class="color-text-a">{{ (isset($agent) && $agent->email !=NULL) ? $agent->email : ''}}</span>
                                         </li>
                                     </ul>
                                     <div class="socials-a">

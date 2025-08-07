@@ -30063,7 +30063,7 @@ div.tagsinput span.tag a {
     box-shadow: 4px 0px 7px 0px rgba(182, 185, 189, 0.25);
   }
   .sidebar-dark.sidebar-icon-only .sidebar .nav .nav-item.hover-open .nav-link .menu-title {
-    background: #232227;
+    background: #46c35f /*#232227*/;
   }
   .rtl.sidebar-icon-only .sidebar .nav .nav-item.hover-open .nav-link .menu-title {
     left: auto;
@@ -30096,7 +30096,7 @@ div.tagsinput span.tag a {
     box-shadow: 4px 4px 7px 0px rgba(182, 185, 189, 0.25);
   }
   .sidebar-dark.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapse, .sidebar-dark.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapsing {
-    background: #232227;
+    background: #2eca6a;
   }
   .rtl.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapse, .rtl.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapsing {
     left: auto;
@@ -30674,7 +30674,10 @@ div.tagsinput span.tag a {
 }
 
 
-
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #aaa !important;
+  color: rgb(31, 31, 31) !important;
+}
 
 
 

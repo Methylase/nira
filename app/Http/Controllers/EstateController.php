@@ -28,10 +28,11 @@ class EstateController extends Controller
 
         $carouselProperties = Property::inRandomOrder()->limit(5)->get();
         $latestProperties = Property::inRandomOrder()->limit(3)->get(); 
-        $agents = User::inRandomOrder()->limit(3)->with('profile')->get()->skip(1);
+        $agents = User::inRandomOrder()->limit(3)->with('profile')->get();
+        $blogs = Blog::inRandomOrder()->limit(12)->get();
         $testimonials = Testimonial::inRandomOrder()->limit(5)->get();
         
-        return view('pages.estate.index',['title'=> 'Home','carouselProperties'=>$carouselProperties, 'agents' => $agents, 'testimonials' => $testimonials, 'latestProperties'=> $latestProperties]);
+        return view('pages.estate.index',['title'=> 'Home','carouselProperties'=>$carouselProperties, 'agents' => $agents, 'blogs' => $blogs, 'testimonials' => $testimonials, 'latestProperties'=> $latestProperties]);
         
       }
 
@@ -74,12 +75,10 @@ class EstateController extends Controller
       public function property(Request $request){
         $id = $request->id;
         $property = Property::findOrFail(protectData($id));
-        $user = User::findOrFail(protectData($property->user_id));
-        $email = $user->email;
-        $agent = Profile::where('user_id',protectData($property->user_id))->get()[0];
+        $agent = User::with('profile')->findOrFail(protectData($property->user_id));
 
         $carousels = Carousel::where('property_id', $id)->get();
-        return view('pages.estate.property',['title'=> 'property','property'=> $property, 'email' =>$email, 'agent'=>$agent, 'carousels'=>$carousels]);
+        return view('pages.estate.property',['title'=> 'property','property'=> $property, 'agent'=>$agent, 'carousels'=>$carousels]);
         
       }  
       
@@ -134,14 +133,39 @@ class EstateController extends Controller
       //agents page
       public function agents(){
 
-        return view('pages.estate.agents', ['title' => 'Agents']);
+        $agents = User::inRandomOrder()->with('profile')->skip(1)->paginate('10');
+        return view('pages.estate.agents', ['title' => 'Agents', 'agents' =>$agents]);
         
       }        
 
       //agent page
-      public function agent($name=null){
+      public function agent(Request $request){
+        $id = $request->id;
+        $agent = User::with('profile')->findOrFail(protectData($id));
+        
+        if($_SERVER['REQUEST_METHOD'] =='POST'){
 
-        return view('pages.estate.agent');
+
+            $property_type = protectData($request->input('property_type'));
+
+            if($property_type =="all"){
+              $properties = Property::inRandomOrder()->limit(6)->get();
+            }elseif($property_type =="1"){
+              $properties = Property::inRandomOrder()->orderBy('created_at', 'desc')->limit(6)->get();
+            }elseif($property_type =="2"){
+              $properties = Property::inRandomOrder()->where('status','rent')->limit(6)->get();
+            }elseif($property_type =="3"){
+              $properties = Property::inRandomOrder()->where('status','sale')->limit(6)->get();
+            }
+
+          return view('pages.estate.agent',['title'=> 'Agent','properties'=> $properties, 'agent' => $agent, 'property_type'=> $property_type]);
+
+        }else{
+
+          $properties = Property::inRandomOrder()->limit(6)->get();
+          
+          return view('pages.estate.agent',['title'=> 'Agent','properties'=> $properties,'agent' => $agent]);
+        }
         
       }      
 
@@ -221,7 +245,7 @@ class EstateController extends Controller
             if( Testimonial::where(['email'=>protectData($email)])->exists()){
 
               $testimony = Testimonial::where(['email'=>protectData($email)])->get()[0];   
-              //$testimony = Testimonial::find($testimony->id);
+             
    
               $FileSystem = new Filesystem();
               $directory = public_path().'/testimonial_images/';

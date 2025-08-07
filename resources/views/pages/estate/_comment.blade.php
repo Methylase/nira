@@ -2,7 +2,7 @@
     <div class="comment-details">
         <h4 class="comment-author">{{$comment->name}}</h4>
         <span>{{date('d M. Y', strtotime($comment->created_at))}}</span>
-        <p class="comment-description">
+        <p class="comment-description"> <i class="fa fa-comments"></i>
         {{$comment->content}}
         </p>
         <a id="{{$comment->id}}" class="reply">Reply</a>

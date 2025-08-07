@@ -35,7 +35,7 @@ class profile extends Model
        'linkedin'
 
    ];   
-  protected $table='profiles';
+  public $table='profiles';
   protected $primaryKey='id';
    
     function user() {

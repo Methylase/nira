@@ -2165,8 +2165,13 @@ footer .credits {
   justify-content: right;
 }
 .img-box-a > .img-a{
-  height:560px;
+  height:400px;
 }
+
+ .card-img-d > .img-d{
+  min-height:350px;
+}
+
 nav > .pagination {
   display: flex;
   justify-content : right;

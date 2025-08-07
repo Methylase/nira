@@ -25,27 +25,27 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php $i= 1;?>
+                                                            <?php $i = 1 ?>
                                                             @foreach ($blogs as $blog )
                                                             <tr>
                     
-                                                                <td class="pl-0 pb-0"><?= $i ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $blog->type ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $blog->title ?> </td>
-                                                                <td class="pl-0 pb-0"><?= $blog->description ?> </td>
+                                                                <td class="pl-0 pb-0">{{$i }}</td>
+                                                                <td class="pl-0 pb-0">{{$blog->type}}</td>
+                                                                <td class="pl-0 pb-0">{{$blog->title}}</td>
+                                                                <td class="pl-0 pb-0">{{$blog->description}}</td>
                                                                 <td class="pl-0 pb-0">
-                                                                    <?php if( $blog->status == NULL): ?>
+                                                                    @if( $blog->status == NULL)
                                                                         <span  class="bg-warning rounded p-2">Active</span> 
-                                                                    <?php elseif($blog->status !=NULL): ?>
+                                                                    @elseif($blog->status !=NULL)
                                                                         <span class="bg-danger rounded p-2">Inactive</span>
-                                                                    <?php endif ?>
+                                                                    @endif
                                                                 </td>
                                                                 <td>
                                                                     <a href="/edit-blog-post/{{$blog->id}}" class="btn" title="Edit"><span class="fa fa-edit h3"></span></a>                                         
                                                                     <a href="" class="btn deleteBlog"  id='del {{$blog->id}}' data-title="Delete" data-toggle="modal" data-target="#confirm-delete"><span class="fa fa-trash h3" title="Delete"></span></a>
                                                                 </td>
                                                             </tr>
-                                                            <?php $i++;?>
+                                                            <?php $i++ ?>
                                                             @endforeach
                                                         </tbody>                 
                                                     </table>

@@ -120,7 +120,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label">Number of bed</label>
+                                    <label class="col-sm-3 col-form-label">Number of bed(s)/office(s)</label>
                                     <div class="col-sm-9">
                                         <select name="bed" class="form-control form-control-lg" >
                                             <option value="">Select number of bed(s)</option>
