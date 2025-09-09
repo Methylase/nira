@@ -2,7 +2,6 @@
 
 namespace App;
 use App\Blog;
-use App\Comment;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 

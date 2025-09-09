@@ -33,7 +33,7 @@ Route::post('/contact_agent', 'EstateController@contact_agent');
 Route::post('/comments', 'EstateController@comments')->name('comments');
 Route::get('/privacy-policy', 'EstateController@privacy')->name('privacy-policy');
 
-Route::group(['middleware'=>'guest'], function(){
+Route::group( ['middleware'=>'guest'], function(){
     Route::get('/login', 'AdminController@login')->name('login');
     Route::post('/login', 'AdminController@loginPost');
     Route::get('/signup', 'AdminController@signup')->name('signup');

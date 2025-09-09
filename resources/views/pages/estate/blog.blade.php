@@ -90,7 +90,7 @@
                         <h3>Leave a Comment</h3>
                         <form action="{{ route('comments') }}" method="POST">
                             {{csrf_field()}}
-                            <input type="hidden" name="blog_id"  value="{{ $blog->id }}">
+                            <input type="hidden" name="blog_id"  value="{{$blog->id}}">
                             <input type="hidden" name="parent_id"  value="">
                             <input type="text" name="name" required class="form-control form-control-lg form-control-a mb-3" placeholder="Enter your name">
                             <input type="text" name="email" required class="form-control form-control-lg form-control-a mb-3" placeholder="Enter your email">

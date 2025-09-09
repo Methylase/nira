@@ -36,7 +36,7 @@
                     <div class="col-md-4">
                         <div class="card-box-b card-shadow news-box">
                         <div class="img-box-b">
-                            <img src="{{asset('/blog_images/'.$blog->id.'/'.$blog->image)}}" alt="" class="img-b img-fluid">
+                            <img src="{{asset('/blog_images/'.$blog->id.'/'.$blog->image)}}" alt=""  min-height="inherit" class="img-b img-fluid">
                         </div>
                         <div class="card-overlay">
                             <div class="card-header-b">

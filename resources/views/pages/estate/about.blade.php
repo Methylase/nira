@@ -100,7 +100,7 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Gabriel Bayewu
+                      <a href="" class="link-two">Brayn Bayewu
                         <br> Director Of Operation</a>
                     </h3>
                   </div>
@@ -114,7 +114,7 @@
                       <strong>Phone: </strong> +2348188373898
                     </p>
                     <p>
-                      <strong>Email: </strong> gabriel.bayewu@niraproperties.com
+                      <strong>Email: </strong> brayn.bayewu@niraproperties.com
                     </p>
                   </div>
                 </div>
@@ -156,7 +156,7 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Steven Faulawn
+                      <a href="" class="link-two">Mia Faulawn
                         <br> Head Of Marketing</a>
                     </h3>
                   </div>
@@ -170,7 +170,7 @@
                       <strong>Phone: </strong> +2349036561101
                     </p>
                     <p>
-                      <strong>Email: </strong> steven.faulawn@niraproperties.com
+                      <strong>Email: </strong> mia.faulawn@niraproperties.com
                     </p>
                   </div>
                 </div>
@@ -217,7 +217,7 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Emma Toledo
+                      <a href="" class="link-two">Emma Toledo
                         <br> Digital Strategist</a>
                     </h3>
                   </div>
@@ -278,14 +278,14 @@
                 <div class="card-header-d">
                   <div class="card-title-d align-self-center">
                     <h3 class="title-d">
-                      <a href="agent-single.html" class="link-two">Bryan Dawn
+                      <a href="" class="link-two">Bryan Dawn
                         <br> Graphics Designer</a>
                     </h3>
                   </div>
                 </div>
                 <div class="card-body-d">
                   <p class="content-d color-text-a">
-                    .
+                    Idea concerve, it is an idea preserved.
                   </p>
                   <div class="info-agents color-a">
                     <p>

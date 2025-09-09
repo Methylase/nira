@@ -501,31 +501,31 @@
           delBlog = delBlog.split(' ');
           $('.del_blog').attr('id', 'del_blog'+delBlog[1])
           $('#del_blog'+delBlog[1]).on('click', function(){
-          var token =$("meta[name='csrf-token']").attr("content");
-          values= {
-            "BlogId": delBlog[1],
-            "_token": token,
-          }
-
-          // delete staff
-          $.ajax({
-              type: "DELETE",
-              url: "/delete-blog-post/"+delBlog[1],
-              data: values,
-          }).done(function(result){
-            if (result.success=='success'){
-              $('#confirm-delete').modal('hide');
-              $("#blog-body").prepend("<div class='status alert alert-success text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>"); 
-              setTimeout(function(){
-              location.reload();
-              }, 6000);
-            }else if(result.success=='fail'){
-                $("#blog-body").prepend("<div class='status alert alert-danger text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>");
-              setTimeout(function(){
-              location.reload();
-              }, 6000);                  
+            var token =$("meta[name='csrf-token']").attr("content");
+            values= {
+              "BlogId": delBlog[1],
+              "_token": token,
             }
-          });
+
+            // delete staff
+            $.ajax({
+                type: "DELETE",
+                url: "/delete-blog-post/"+delBlog[1],
+                data: values,
+            }).done(function(result){
+              if (result.success=='success'){
+                $('#confirm-delete').modal('hide');
+                $("#blog-body").prepend("<div class='status alert alert-success text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>"); 
+                setTimeout(function(){
+                location.reload();
+                }, 6000);
+              }else if(result.success=='fail'){
+                  $("#blog-body").prepend("<div class='status alert alert-danger text-center col-sm-9 offset-sm-1'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times</a><strong >" +result.message+"</strong></div>");
+                setTimeout(function(){
+                location.reload();
+                }, 6000);                  
+              }
+            });
           });
         });   
                 

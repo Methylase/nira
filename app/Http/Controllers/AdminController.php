@@ -242,6 +242,7 @@ class AdminController extends Controller
     // delete blog post here
   public function deleteBlogPost(Blog $blog){
     $this->authorize('delete', $blog);
+    Blog::where("id",$blog->id)->update(['status' => 'delete']);
     return response()->json(['success'=>'success','message'=>'blog with an '.$blog->id.' has been deleted successfully']);
   }
 
@@ -870,7 +871,7 @@ class AdminController extends Controller
   // delete property here
   public function deleteProperty(Property $property){
     $this->authorize('delete', $property);
-
+    Property::where("id",$property->id)->update(['status' => 'delete']);
         return response()->json(['success'=>'success','message'=>'property with an '.$property->id.' has been deleted successfully']);
 
   }
